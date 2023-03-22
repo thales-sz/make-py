@@ -6,6 +6,7 @@ services:
     tty: true
     stdin_open: true
     container_name: server-make-py
+    restart: always
     working_dir: /app
     depends_on: # Só garante que o container está de pé, mas não a aplicação
       - db
@@ -18,7 +19,9 @@ services:
   db:
     image: mysql:8.0.23
     container_name: db-make-py
+    restart: always
     ports:
       - 3306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=Ratoc0mlecto*
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
