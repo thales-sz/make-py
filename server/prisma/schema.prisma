@@ -15,12 +15,20 @@ model User {
   first_name String
   last_name String
   email String @unique
+  role Role @default(USER)
   password String
+}
+
+enum Role {
+  USER
+  ADMIN
+  SELLER
 }
 
 model Product {
   id String @id @default(uuid())
   price Float
   name String @unique
+  description String
   stock_quantity Int
 }
