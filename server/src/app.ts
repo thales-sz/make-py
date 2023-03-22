@@ -1,4 +1,5 @@
 import express, { RequestHandler, Application, Request, Response } from 'express';
+import cors from 'cors';
 
 class App {
   public app: Application;
@@ -18,6 +19,7 @@ class App {
     };
 
     this.app.use(express.json());
+    this.app.use(cors());
     this.app.use(accessControl);
   }
 
