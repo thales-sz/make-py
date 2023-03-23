@@ -12,4 +12,14 @@ export default class UserModel {
     return this.prisma.user.create({ data: { ...obj } });
   }
 
+  public async get(): Promise<User[]> {
+    return this.prisma.user.findMany({})
+  }
+
+  public async update(id: string, obj: User): Promise<User> {
+    return this.prisma.user.update({
+      where: { id: id },
+      data: { ...obj }
+    })
+  }
 }
