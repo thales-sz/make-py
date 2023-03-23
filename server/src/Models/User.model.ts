@@ -1,24 +1,30 @@
-import { prismaClient } from '../Database/prismaClient';
-import { User } from '@prisma/client';
+import { prismaClient } from '../Database/prismaClient'
+import { type User } from '@prisma/client'
 
 export default class UserModel {
-  protected prisma: typeof prismaClient
+  protected prisma
 
-  constructor() {
-    this.prisma = prismaClient;
+  constructor () {
+    this.prisma = prismaClient.user
   }
 
-  public async create(obj: User): Promise<User> {
-    return this.prisma.user.create({ data: { ...obj } });
+  public async create (obj: User): Promise<User> {
+    return await this.prisma.create({ data: { ...obj } })
   }
 
-  public async get(): Promise<User[]> {
-    return this.prisma.user.findMany({})
+  public async get (): Promise<User[]> {
+    return await this.prisma.findMany({})
   }
 
-  public async update(id: string, obj: User): Promise<User> {
-    return this.prisma.user.update({
-      where: { id: id },
+  public async getById (id: string): Promise<User | null> {
+    return await this.prisma.findFirst({
+      where: { id }
+    })
+  }
+
+  public async update (id: string, obj: User): Promise<User | null> {
+    return await this.prisma.update({
+      where: { id },
       data: { ...obj }
     })
   }
