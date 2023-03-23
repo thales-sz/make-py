@@ -1,4 +1,5 @@
-import express, { type RequestHandler, type Application, type Request, type Response } from 'express'
+import express from 'express'
+import type { Application, Request, RequestHandler, Response } from 'express'
 import cors from 'cors'
 
 class App {
@@ -7,7 +8,7 @@ class App {
   constructor () {
     this.app = express()
     this.config()
-    this.app.get('/', (_req: Request, res: Response) => res.json({ message: 'Hello, World!' }))
+    this.app.get('/ping', (_req: Request, res: Response) => res.json({ message: 'pong' }))
   }
 
   private config (): void {
