@@ -2,6 +2,8 @@ import express from 'express'
 import type { Application, Request, RequestHandler, Response } from 'express'
 import cors from 'cors'
 
+import { UserRouter } from './Routers'
+
 class App {
   public app: Application
 
@@ -9,6 +11,7 @@ class App {
     this.app = express()
     this.config()
     this.app.get('/ping', (_req: Request, res: Response) => res.json({ message: 'pong' }))
+    this.app.use('/user', UserRouter)
   }
 
   private config (): void {
