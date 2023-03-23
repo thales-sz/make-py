@@ -9,6 +9,5 @@ export default interface User {
 
 enum Role {
   USER,
-  ADMIN,
-  SELLER
+  ADMIN
 }
