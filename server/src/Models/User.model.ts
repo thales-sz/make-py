@@ -1,15 +1,15 @@
-import { PrismaClient, Prisma } from '@prisma/client'
-import User from '../Interfaces/User.interface'
+import { prismaClient } from '../Database/prismaClient';
+import { User } from '@prisma/client';
 
-export default class AbstractModel {
-  protected prisma: PrismaClient
+export default class UserModel {
+  protected prisma: typeof prismaClient
 
   constructor() {
-    this.prisma = new PrismaClient();
+    this.prisma = prismaClient;
   }
 
-  public async create(obj: User): Promise<any> {
-    
+  public async create(obj: User): Promise<User> {
+    return this.prisma.user.create({ data: { ...obj } });
   }
-    
+
 }
