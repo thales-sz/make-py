@@ -10,4 +10,8 @@ export default class UserService {
   public async get (): Promise<User[]> {
     return await this.model.get()
   }
+
+  public async create (user: User): Promise<User> {
+    return await this.model.create(user)
+  }
 }
