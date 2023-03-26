@@ -27,4 +27,14 @@ export default class UserController {
       this.next(error)
     }
   }
+
+  public async getById (): Promise<Response | undefined> {
+    try {
+      const { id } = this.req.params
+      const response = await this.service.getById(id)
+      return this.res.status(200).json(response)
+    } catch (error) {
+      this.next(error)
+    }
+  }
 }
