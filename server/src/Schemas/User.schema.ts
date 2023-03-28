@@ -1,21 +1,16 @@
-import type { User } from '@prisma/client'
 import { z } from 'zod'
 
-export default class Validation {
-  protected userSchema
+const userSchema = z.object({
+  id: z.string().optional(),
+  first_name: z.string(),
+  last_name: z.string(),
+  email: z.string().email(),
+  role: z.literal('USER').optional(),
+  password: z.string()
+})
 
-  constructor () {
-    this.userSchema = z.object({
-      id: z.string(),
-      first_name: z.string(),
-      last_name: z.string(),
-      email: z.string(),
-      role: z.literal('USER'),
-      password: z.string()
-    })
-  }
-
-  public user (body: User): User {
-    return this.userSchema.parse(body)
-  }
-}
+const userSignIn = z.object({
+  email: z.string().email(),
+  password: z.string()
+})
+export { userSchema, userSignIn }

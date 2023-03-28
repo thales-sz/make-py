@@ -28,4 +28,10 @@ export default class UserModel {
       data: { ...obj }
     })
   }
+
+  public async getByEmail (email: string): Promise<User | null> {
+    return await this.prisma.findFirst({
+      where: { email }
+    })
+  }
 }
