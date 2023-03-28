@@ -3,7 +3,7 @@ import type { Application, Request, RequestHandler, Response } from 'express'
 import cors from 'cors'
 
 import { UserRouter } from './Routers'
-import ErrorHandler from './Middleware/Error.middleware'
+import ErrorHandler from './Middleware/error.middleware'
 
 class App {
   public app: Application
