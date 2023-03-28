@@ -1,5 +1,8 @@
 import { UserModel } from '../Models'
 import { type User } from '@prisma/client'
+import bcrypt from 'bcrypt'
+import generateJWT from '../Auth/generateJWT'
+
 export default class UserService {
   protected model: UserModel
 
@@ -17,5 +20,17 @@ export default class UserService {
 
   public async getById (id: string): Promise<User | null> {
     return await this.model.getById(id)
+  }
+
+  public async signin ({ email, password }: User): Promise<string> {
+    const oldUser = await this.model.getByEmail(email)
+
+    if (oldUser == null) throw new Error('UserNotFound')
+
+    const isPasswordCorrect = await bcrypt.compare(password, oldUser.password)
+
+    if (!isPasswordCorrect) throw new Error('IncorrectCre')
+
+    return generateJWT(oldUser)
   }
 }

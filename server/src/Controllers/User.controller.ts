@@ -19,7 +19,7 @@ export default class UserController {
     }
   }
 
-  public async create (): Promise<Response | undefined> {
+  public async signup (): Promise<Response | undefined> {
     const newUser: User = this.req.body
     try {
       const response = await this.service.create(newUser)
@@ -43,10 +43,12 @@ export default class UserController {
   }
 
   public async signin (): Promise<Response | undefined> {
-    const { email, password } = await this.req.body
+    const user: User = this.req.body
 
     try {
-      const oldUser = await this.service.getById(email)
+      const token = await this.service.signin(user)
+
+      return this.res.status(200).json({ token })
     } catch (error) {
       this.next(error)
     }

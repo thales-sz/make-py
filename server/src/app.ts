@@ -3,6 +3,7 @@ import type { Application, Request, RequestHandler, Response } from 'express'
 import cors from 'cors'
 
 import { UserRouter } from './Routers'
+import ErrorHandler from './Middleware/Error.middleware'
 
 class App {
   public app: Application
@@ -12,6 +13,7 @@ class App {
     this.config()
     this.app.get('/ping', (_req: Request, res: Response) => res.json({ message: 'pong' }))
     this.app.use('/user', UserRouter)
+    this.app.use(new ErrorHandler().handle)
   }
 
   private config (): void {
