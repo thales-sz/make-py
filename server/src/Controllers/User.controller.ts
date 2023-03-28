@@ -12,6 +12,7 @@ export default class UserController {
   public async get (): Promise<Response | undefined> {
     try {
       const response = await this.service.get()
+
       return this.res.status(200).json(response)
     } catch (error) {
       this.next(error)
@@ -19,9 +20,10 @@ export default class UserController {
   }
 
   public async create (): Promise<Response | undefined> {
+    const newUser: User = this.req.body
     try {
-      const newUser: User = this.req.body
       const response = await this.service.create(newUser)
+
       return this.res.status(200).json(response)
     } catch (error) {
       this.next(error)
@@ -29,10 +31,22 @@ export default class UserController {
   }
 
   public async getById (): Promise<Response | undefined> {
+    const { id } = this.req.params
+
     try {
-      const { id } = this.req.params
       const response = await this.service.getById(id)
+
       return this.res.status(200).json(response)
+    } catch (error) {
+      this.next(error)
+    }
+  }
+
+  public async signin (): Promise<Response | undefined> {
+    const { email, password } = await this.req.body
+
+    try {
+      const oldUser = await this.service.getById(email)
     } catch (error) {
       this.next(error)
     }
