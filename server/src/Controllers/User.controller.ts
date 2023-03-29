@@ -1,6 +1,6 @@
 import type { User } from '@prisma/client'
 import type { Request, Response, NextFunction } from 'express'
-import UserService from '../Services/User.service'
+import { UserService } from '../Domain/Services'
 
 export default class UserController {
   protected service: UserService
@@ -46,9 +46,9 @@ export default class UserController {
     const user: User = this.req.body
 
     try {
-      const token = await this.service.signin(user)
+      const { token, result } = await this.service.signin(user)
 
-      return this.res.status(200).json({ token })
+      return this.res.status(200).json({ token, result })
     } catch (error) {
       this.next(error)
     }

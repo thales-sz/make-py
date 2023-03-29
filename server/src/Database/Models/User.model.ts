@@ -1,4 +1,4 @@
-import { prismaClient } from '../Database/prismaClient'
+import { prismaClient } from '../prismaClient'
 import { type User } from '@prisma/client'
 
 export default class UserModel {
@@ -13,7 +13,8 @@ export default class UserModel {
   }
 
   public async get (): Promise<User[]> {
-    return await this.prisma.findMany({})
+    return await this.prisma.findMany({
+    })
   }
 
   public async getById (id: string): Promise<User | null> {
