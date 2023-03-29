@@ -22,9 +22,9 @@ export default class UserController {
   public async signup (): Promise<Response | undefined> {
     const newUser: User = this.req.body
     try {
-      const response = await this.service.create(newUser)
+      const { token, result } = await this.service.create(newUser)
 
-      return this.res.status(200).json(response)
+      return this.res.status(200).json({ token, result })
     } catch (error) {
       this.next(error)
     }
@@ -49,6 +49,18 @@ export default class UserController {
       const { token, result } = await this.service.signin(user)
 
       return this.res.status(200).json({ token, result })
+    } catch (error) {
+      this.next(error)
+    }
+  }
+
+  public async delete (): Promise<Response | undefined> {
+    const { id } = this.req.params
+
+    try {
+      const response = await this.service.delete(id)
+
+      return this.res.status(200).json(response)
     } catch (error) {
       this.next(error)
     }

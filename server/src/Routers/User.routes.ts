@@ -10,5 +10,6 @@ router.get('/', async (req, res, next) => await new UserController(req, res, nex
 router.get('/:id', async (req, res, next) => await new UserController(req, res, next).getById())
 router.post('/signin', validationMiddleware.userSignIn, async (req, res, next) => await new UserController(req, res, next).signin())
 router.post('/signup', validationMiddleware.userSignUp, async (req, res, next) => await new UserController(req, res, next).signup())
+router.delete('/:id', async (req, res, next) => await new UserController(req, res, next).delete())
 
 export default router

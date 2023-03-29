@@ -35,4 +35,10 @@ export default class UserModel {
       where: { email }
     })
   }
+
+  public async delete (id: string): Promise<User> {
+    return await this.prisma.delete({
+      where: { id }
+    })
+  }
 }

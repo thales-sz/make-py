@@ -50,4 +50,12 @@ export default class UserService {
 
     return { token, result: oldUser.id }
   }
+
+  public async delete (id: string): Promise<User> {
+    const oldUser = await this.model.getById(id)
+
+    if (oldUser == null) throw new Error('UserNotFound')
+
+    return await this.model.delete(id)
+  }
 }
