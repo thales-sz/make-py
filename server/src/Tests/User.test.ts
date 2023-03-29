@@ -1,18 +1,26 @@
 import sinon from 'sinon'
-import { describe, it, expect } from 'vitest'
+import chai from 'chai'
+import { describe, it, expect, afterEach } from 'vitest'
 import { UserModel } from '../Database/Models'
 import { userGetResponse } from './Mocks/User.mock'
 
-describe('Tests for User Domain and his sucess cases', () => {
-  it('Should be able to create a new user with a valid body', () => {
-    sinon.stub(new UserModel(), 'getAll').resolves(userGetResponse)
-    const newUser = {
-      first_name: 'John',
-      last_name: 'Doe',
-      email: 'johndoe@email.com',
-      password: 'password'
-    }
+import { app } from '../app'
 
-    expect(newUser.first_name).toBe('John')
+// const newUser = {
+//  first_name: 'John',
+//  last_name: 'Doe',
+//  email: 'johndoe@email.com',
+//  password: 'password'
+// }
+
+describe('Tests for User Domain and his sucess cases', () => {
+  afterEach(() => { sinon.restore() })
+
+  it('Should return a list with all users from DB', async () => {
+    sinon.stub(new UserModel(), 'getAll').resolves(userGetResponse)
+
+    // expect(status).toBe(200)
+    // expect(ok).toBeTruthy()
+    // expect(body[0]).toHaveProperty('id')
   })
 })

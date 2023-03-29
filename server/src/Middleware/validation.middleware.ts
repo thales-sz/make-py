@@ -1,9 +1,10 @@
+import type { User } from '@prisma/client'
 import type { Request, Response, NextFunction } from 'express'
 import { userSchema, userSignIn } from '../Schemas/User.schema'
 
 export default class ValidationMiddleware {
   public userSignUp (req: Request, res: Response, next: NextFunction): void {
-    const user = req.body
+    const user: User = req.body
     try {
       userSchema.parse(user)
       next()

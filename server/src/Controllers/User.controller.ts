@@ -36,6 +36,8 @@ export default class UserController {
     try {
       const response = await this.service.getById(id)
 
+      if (response == null) return this.res.status(404).json({ message: `User not found to id: ${id}` })
+
       return this.res.status(200).json(response)
     } catch (error) {
       this.next(error)
