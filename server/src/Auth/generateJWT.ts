@@ -13,10 +13,9 @@ export default function generateJWT (user: User): string {
   }
 
   const config: Jwt.SignOptions = {
-    algorithm: 'HS256'
+    algorithm: 'HS256',
+    expiresIn: '2h'
   }
 
-  const token = Jwt.sign(payload, JWT_SECRET, config)
-
-  return token
+  return Jwt.sign(payload, JWT_SECRET, config)
 }
