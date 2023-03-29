@@ -12,9 +12,8 @@ export default class UserModel {
     return await this.prisma.create({ data: { ...obj } })
   }
 
-  public async get (): Promise<User[]> {
-    return await this.prisma.findMany({
-    })
+  public async getAll (): Promise<User[]> {
+    return await this.prisma.findMany({})
   }
 
   public async getById (id: string): Promise<User | null> {

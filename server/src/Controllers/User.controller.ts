@@ -9,9 +9,9 @@ export default class UserController {
     this.service = new UserService()
   }
 
-  public async get (): Promise<Response | undefined> {
+  public async getAll (): Promise<Response | undefined> {
     try {
-      const response = await this.service.get()
+      const response = await this.service.getAll()
 
       return this.res.status(200).json(response)
     } catch (error) {

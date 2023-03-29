@@ -15,8 +15,8 @@ export default class UserService {
     this.model = new UserModel()
   };
 
-  public async get (): Promise<User[]> {
-    return await this.model.get()
+  public async getAll (): Promise<User[]> {
+    return await this.model.getAll()
   }
 
   public async create (user: User): Promise<UserReturn> {
