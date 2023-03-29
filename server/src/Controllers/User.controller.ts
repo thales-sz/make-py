@@ -1,6 +1,6 @@
 import type { User } from '@prisma/client'
 import type { Request, Response, NextFunction } from 'express'
-import UserService from '../Services/User.service'
+import { UserService } from '../Domain/Services'
 
 export default class UserController {
   protected service: UserService
@@ -9,9 +9,9 @@ export default class UserController {
     this.service = new UserService()
   }
 
-  public async get (): Promise<Response | undefined> {
+  public async getAll (): Promise<Response | undefined> {
     try {
-      const response = await this.service.get()
+      const response = await this.service.getAll()
 
       return this.res.status(200).json(response)
     } catch (error) {
@@ -22,9 +22,9 @@ export default class UserController {
   public async signup (): Promise<Response | undefined> {
     const newUser: User = this.req.body
     try {
-      const response = await this.service.create(newUser)
+      const { token, result } = await this.service.create(newUser)
 
-      return this.res.status(200).json(response)
+      return this.res.status(201).json({ token, result })
     } catch (error) {
       this.next(error)
     }
@@ -36,6 +36,8 @@ export default class UserController {
     try {
       const response = await this.service.getById(id)
 
+      if (response == null) return this.res.status(404).json({ message: `User not found to id: ${id}` })
+
       return this.res.status(200).json(response)
     } catch (error) {
       this.next(error)
@@ -46,9 +48,21 @@ export default class UserController {
     const user: User = this.req.body
 
     try {
-      const token = await this.service.signin(user)
+      const { token, result } = await this.service.signin(user)
 
-      return this.res.status(200).json({ token })
+      return this.res.status(200).json({ token, result })
+    } catch (error) {
+      this.next(error)
+    }
+  }
+
+  public async delete (): Promise<Response | undefined> {
+    const { id } = this.req.params
+
+    try {
+      const response = await this.service.delete(id)
+
+      return this.res.status(200).json(response)
     } catch (error) {
       this.next(error)
     }
