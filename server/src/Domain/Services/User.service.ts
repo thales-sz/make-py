@@ -44,7 +44,7 @@ export default class UserService {
 
     const isPasswordCorrect = await bcrypt.compare(password, oldUser.password)
 
-    if (!isPasswordCorrect) throw new Error('IncorrectCre')
+    if (!isPasswordCorrect) throw new Error('IncorrectCredentials')
 
     const token = generateJWT(oldUser)
 
