@@ -24,7 +24,7 @@ export default class UserController {
     try {
       const { token, result } = await this.service.create(newUser)
 
-      return this.res.status(200).json({ token, result })
+      return this.res.status(201).json({ token, result })
     } catch (error) {
       this.next(error)
     }
