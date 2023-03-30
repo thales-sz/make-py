@@ -6,7 +6,7 @@ import * as Mock from './Mocks/User.mock'
 
 import { app } from '../app'
 
-describe('Tests for User Domain and its success cases', () => {
+describe('Tests for User Domain and its cases', () => {
   afterEach(() => { sinon.restore() })
 
   it('Should return a list with all users from DB', async () => {
