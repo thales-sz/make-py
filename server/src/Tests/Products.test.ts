@@ -9,10 +9,10 @@ import { app } from '../app'
 describe('Tests for Products Domain and its cases', () => {
   afterEach(() => { sinon.restore() })
 
-  it('Should return a list with all users from DB', async () => {
+  it('Should return a list of products', async () => {
     sinon.stub(ProductModel.prototype, 'getAll').resolves(Mock.getAll.response)
 
-    const { status, ok, body } = await request(app).get('/user')
+    const { status, ok, body } = await request(app).get('/product')
 
     expect(status).toBe(200)
     expect(ok).toBeTruthy()
