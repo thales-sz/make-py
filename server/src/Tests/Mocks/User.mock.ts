@@ -14,6 +14,13 @@ const homerResponse = {
   role: 'USER'
 }
 
+const sendError = {
+  first_name: 'Homer',
+  last_name: 'Simpson',
+  email: 'pyetra.chagas@gmail.com',
+  password: 'password'
+}
+
 const ragnar = {
   id: '789456231',
   first_name: 'Ragnar',
@@ -47,5 +54,6 @@ export const getAll = {
 
 export const create = {
   response: homerResponse,
-  send: homerSend
+  send: homerSend,
+  sendError
 }
