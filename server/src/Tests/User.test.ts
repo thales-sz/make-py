@@ -12,12 +12,12 @@ describe('Tests for User Domain and its success cases', () => {
   it('Should return a list with all users from DB', async () => {
     sinon.stub(UserModel.prototype, 'getAll').resolves(Mock.getAll.response)
 
-    const response = await request(app).get('/user')
+    const { status, ok, body } = await request(app).get('/user')
 
-    expect(response.status).toBe(200)
-    expect(response.ok).toBeTruthy()
-    expectTypeOf(response.body).toBeArray()
-    expect(response.body[0]).to.haveOwnProperty('id')
+    expect(status).toBe(200)
+    expect(ok).toBeTruthy()
+    expectTypeOf(body).toBeArray()
+    expect(body[0]).to.haveOwnProperty('id')
   })
 
   it('Should be able to create a new user with valid credentials', async () => {
@@ -33,14 +33,36 @@ describe('Tests for User Domain and its success cases', () => {
     expect(body).to.haveOwnProperty('result')
   })
 
-  it('Should throw a error when trying to create a new user with an already used email', async () => {
+  it('Should throw an error when trying to create a new user with an already used email', async () => {
     sinon.stub(UserModel.prototype, 'create').throws(new Error('UserExists'))
 
-    const { status, ok } = await request(app)
+    const { status, ok, body } = await request(app)
       .post('/user/signup')
-      .send(Mock.create.sendError)
+      .send(Mock.create.send)
 
     expect(status).toBe(400)
     expect(ok).toBeFalsy()
+    expect(body.message).toBe('User already exists!')
+  })
+
+  it('Should throw an error when trying to signin an account with wrong credentials', async () => {
+    const { status, ok, body } = await request(app)
+      .post('/user/signin')
+      .send(Mock.login.signinError)
+
+    expect(status).toBe(401)
+    expect(ok).toBeFalsy()
+    expect(body.message).toBe('Incorrect credentials!')
+  })
+
+  it('Should be able to signin when trying to signin an account with correct credentials', async () => {
+    const { status, ok, body } = await request(app)
+      .post('/user/signin')
+      .send(Mock.login.signin)
+
+    expect(status).toBe(200)
+    expect(ok).toBeTruthy()
+    expect(body).to.haveOwnProperty('token')
+    expect(body).to.haveOwnProperty('result')
   })
 })
