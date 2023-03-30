@@ -1,7 +1,7 @@
 import sinon from 'sinon'
 import chai from 'chai'
 import chaiHttp from 'chai-http'
-import { describe, it, expect, afterEach } from 'vitest'
+import { describe, it, expect, afterEach, expectTypeOf } from 'vitest'
 import { UserModel } from '../Database/Models'
 import * as Mock from './Mocks/User.mock'
 
@@ -19,7 +19,7 @@ describe('Tests for User Domain and his sucess cases', () => {
 
     expect(status).toBe(200)
     expect(ok).toBeTruthy()
-    expect(body).toBeTypeOf('object')
+    expectTypeOf(body).toBeArray()
     expect(body[0]).to.haveOwnProperty('id')
   })
 
