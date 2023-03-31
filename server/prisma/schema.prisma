@@ -8,23 +8,49 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
+  id         String @id @default(uuid())
   first_name String
-  last_name String
-  email String @unique
-  role String @default("USER")
-  password String
+  last_name  String
+  email      String @unique
+  role       String @default("USER")
+  password   String
+  sale       Sale[]
 
   @@map("users")
 }
 
 model Product {
-  id String @id @default(uuid())
-  price Float
-  name String @unique
-  description String
+  id             String        @id @default(uuid())
+  price          Float
+  name           String        @unique
+  description    String
   stock_quantity Int
-  created_at DateTime @default(now())
+  created_at     DateTime      @default(now())
+  sale_product   SaleProduct[]
 
   @@map("products")
+}
+
+model Sale {
+  id               String        @id @default(uuid())
+  user             User          @relation(fields: [user_id], references: [id])
+  user_id          String
+  delivery_address String
+  total_price      Float
+  sale_date        DateTime      @default(now())
+  status           Boolean       @default(false)
+  sale_product     SaleProduct[]
+
+  @@map("sales")
+}
+
+model SaleProduct {
+  sale      Sale    @relation(fields: [saleId], references: [id])
+  saleId    String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String // relation scalar field (used in the `@relation` attribute above)
+  quantity  Int
+
+  @@id([saleId, productId])
+  @@map("sales_products")
 }
