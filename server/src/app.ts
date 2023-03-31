@@ -13,7 +13,7 @@ class App {
     this.config()
     this.app.get('/ping', (_req: Request, res: Response) => res.json({ message: 'pong' }))
     this.app.use('/user', UserRouter)
-    this.app.use('/products', ProductRouter)
+    this.app.use('/product', ProductRouter)
     this.app.use(new ErrorHandler().handle)
   }
 
