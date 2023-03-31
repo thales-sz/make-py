@@ -61,4 +61,7 @@ model Address {
   user             User   @relation(fields: [user_id], references: [id])
   user_id          String
   delivery_address String
+  cep              Int
+
+  @@map("user_address")
 }
