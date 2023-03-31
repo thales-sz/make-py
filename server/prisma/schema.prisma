@@ -25,7 +25,7 @@ model Product {
   price          Float
   name           String        @unique
   description    String
-  stock_quantity Int
+  stock_quantity Stock?
   created_at     DateTime      @default(now())
   sale_product   SaleProduct[]
 
@@ -64,4 +64,12 @@ model Address {
   cep              Int
 
   @@map("user_address")
+}
+
+model Stock {
+  product    Product @relation(fields: [product_id], references: [id])
+  product_id String  @unique
+  quantity   Int
+
+  @@map("stocks")
 }
