@@ -1,53 +1,68 @@
 import sinon from 'sinon'
-import chai from 'chai'
-import chaiHttp from 'chai-http'
-import { describe, it, expect, afterEach } from 'vitest'
+import request from 'supertest'
+import { describe, it, expect, afterEach, expectTypeOf } from 'vitest'
 import { UserModel } from '../Database/Models'
-import { userGetResponse } from './Mocks/User.mock'
+import * as Mock from './Mocks/User.mock'
 
 import { app } from '../app'
 
-const newUserResponse = {
-  id: '7845123',
-  first_name: 'John',
-  last_name: 'Doe',
-  email: 'johndoe@email.com',
-  role: 'USER',
-  password: 'password'
-}
-
-const newUser = {
-  first_name: 'John',
-  last_name: 'Doe',
-  email: 'johndoe@email.com',
-  password: 'password'
-}
-
-chai.use(chaiHttp)
-
-describe('Tests for User Domain and his sucess cases', () => {
+describe('Tests for User Domain and its cases', () => {
   afterEach(() => { sinon.restore() })
 
   it('Should return a list with all users from DB', async () => {
-    sinon.stub(new UserModel(), 'getAll').resolves(userGetResponse)
+    sinon.stub(UserModel.prototype, 'getAll').resolves(Mock.getAll.response)
 
-    const { status, ok, body } = await chai.request(app).get('/user')
+    const { status, ok, body } = await request(app).get('/user')
 
     expect(status).toBe(200)
     expect(ok).toBeTruthy()
-    expect(body[0]).toHaveProperty('id')
+    expectTypeOf(body).toBeArray()
+    expect(body[0]).to.haveOwnProperty('id')
   })
 
-  it('Should create a new User in the DB', async () => {
-    sinon.stub(new UserModel(), 'create').resolves(newUserResponse)
+  it('Should be able to create a new user with valid credentials', async () => {
+    sinon.stub(UserModel.prototype, 'create').resolves(Mock.create.response)
 
-    const { status, ok, body } = await chai
-      .request(app)
+    const { status, ok, body } = await request(app)
       .post('/user/signup')
-      .send(newUser)
+      .send(Mock.create.send)
 
     expect(status).toBe(201)
     expect(ok).toBeTruthy()
-    expect(body[0]).toHaveProperty('id')
+    expect(body).to.haveOwnProperty('token')
+    expect(body).to.haveOwnProperty('result')
+  })
+
+  it('Should throw an error when trying to create a new user with an already used email', async () => {
+    sinon.stub(UserModel.prototype, 'create').throws(new Error('UserExists'))
+
+    const { status, ok, body } = await request(app)
+      .post('/user/signup')
+      .send(Mock.create.send)
+
+    expect(status).toBe(400)
+    expect(ok).toBeFalsy()
+    expect(body.message).toBe('User already exists!')
+  })
+
+  it('Should throw an error when trying to signin an account with wrong credentials', async () => {
+    const { status, ok, body } = await request(app)
+      .post('/user/signin')
+      .send(Mock.login.signinError)
+
+    expect(status).toBe(401)
+    expect(ok).toBeFalsy()
+    expect(body.message).toBe('Incorrect credentials!')
+  })
+
+  it('Should be able to signin when trying to signin an account with correct credentials', async () => {
+    const { status, ok, body } = await request(app)
+      .post('/user/signin')
+      .send(Mock.login.signin)
+
+    expect(status).toBe(200)
+    expect(ok).toBeTruthy()
+    expect(body).to.haveOwnProperty('token')
+    expect(body).to.haveOwnProperty('result')
   })
 })

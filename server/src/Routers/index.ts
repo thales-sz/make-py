@@ -1,3 +1,4 @@
 import UserRouter from './User.routes'
+import ProductRouter from './Product.routes'
 
-export { UserRouter }
+export { UserRouter, ProductRouter }

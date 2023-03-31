@@ -8,7 +8,7 @@ export default class ErrorHandler {
         next()
         break
       case 'IncorrectCredentials':
-        res.status(400).json({ message: 'Incorrect credentials!' })
+        res.status(401).json({ message: 'Incorrect credentials!' })
         next()
         break
       case 'UserExists':
