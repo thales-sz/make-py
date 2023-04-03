@@ -71,5 +71,5 @@ model Stock {
   product_id String  @unique
   quantity   Int
 
-  @@map("stocks")
+  @@map("stock")
 }
