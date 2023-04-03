@@ -17,4 +17,15 @@ export default class ProductController {
       this.next(error)
     }
   }
+
+  public async create (): Promise<Response | undefined> {
+    const product = this.req.body
+    try {
+      const response = await this.service.create(product)
+
+      return this.res.status(201).json(response)
+    } catch (error) {
+      this.next(error)
+    }
+  }
 }
