@@ -13,9 +13,8 @@ export default class UserModel {
       data: {
         ...user,
         address: {
-          create: [
+          create:
             { ...address }
-          ]
         }
       }
     })

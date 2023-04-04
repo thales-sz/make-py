@@ -1,12 +1,14 @@
-import type { User } from '@prisma/client'
 import type { Request, Response, NextFunction } from 'express'
-import { userSchema, userSignIn } from '../Schemas/User.schema'
+import { addressSchema, userSchema, userSignIn } from '../Schemas/User.schema'
+import type { IUser, IAddress } from '../Domain/Interface/User.interface'
 
 export default class ValidationMiddleware {
   public userSignUp (req: Request, res: Response, next: NextFunction): void {
-    const user: User = req.body
+    const user: IUser = req.body
+    const address: IAddress = user.address
     try {
       userSchema.parse(user)
+      addressSchema.parse(address)
       next()
     } catch (err) {
       next(err)
