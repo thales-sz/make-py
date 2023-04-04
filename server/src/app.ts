@@ -1,5 +1,6 @@
 import express from 'express'
 import type { Application, Request, RequestHandler, Response } from 'express'
+import { rateLimit } from 'express-rate-limit'
 import cors from 'cors'
 
 import { UserRouter, ProductRouter } from './Routers'
@@ -25,9 +26,18 @@ class App {
       next()
     }
 
+    const limiter = rateLimit({
+      windowMs: 15 * 60 * 1000, // 15 minutes
+      max: 100,
+      standardHeaders: true,
+      legacyHeaders: false,
+      message: 'Too many requests, please try again later.'
+    })
+
     this.app.use(express.json())
     this.app.use(cors())
     this.app.use(accessControl)
+    this.app.use(limiter)
   }
 
   public start (PORT: string | number): void {
