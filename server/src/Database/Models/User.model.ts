@@ -1,5 +1,5 @@
 import { prismaClient } from '../prismaClient'
-import { type User } from '@prisma/client'
+import { Address, type User } from '@prisma/client'
 
 export default class UserModel {
   protected prisma
@@ -8,8 +8,13 @@ export default class UserModel {
     this.prisma = prismaClient.user
   }
 
-  public async create (obj: User): Promise<User> {
-    return await this.prisma.create({ data: { ...obj } })
+  public async create (user: User, address: Address): Promise<User> {
+    return await this.prisma.create({
+      data: {
+        ...user,
+        address: address
+      }
+    })
   }
 
   public async getAll (): Promise<User[]> {

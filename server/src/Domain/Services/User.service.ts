@@ -2,11 +2,7 @@ import { UserModel } from '../../Database/Models'
 import { type User } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import generateJWT from '../../Auth/generateJWT'
-
-interface UserReturn {
-  token: string
-  result: string
-}
+import type { IUserReturn } from '../Interface/User.interface'
 
 export default class UserService {
   protected model: UserModel
@@ -19,7 +15,7 @@ export default class UserService {
     return await this.model.getAll()
   }
 
-  public async create (user: User): Promise<UserReturn> {
+  public async create (user: User): Promise<IUserReturn> {
     const oldUser = await this.model.getByEmail(user.email)
 
     if (oldUser != null) throw new Error('UserExists')
@@ -37,7 +33,7 @@ export default class UserService {
     return await this.model.getById(id)
   }
 
-  public async signin ({ email, password }: User): Promise<UserReturn> {
+  public async signin ({ email, password }: User): Promise<IUserReturn> {
     const oldUser = await this.model.getByEmail(email)
 
     if (oldUser == null) throw new Error('UserNotFound')

@@ -12,12 +12,17 @@ model User {
   first_name       String
   last_name        String
   email            String    @unique
-  role             String    @default("USER")
+  role             Role    @default(USER)
   password         String
   sale             Sale[]
-  delivery_address Address[]
+  address Address[]
 
   @@map("users")
+}
+
+enum Role {
+  ADMIN
+  USER
 }
 
 model Product {
@@ -36,7 +41,7 @@ model Sale {
   id               String        @id @default(uuid())
   user             User          @relation(fields: [user_id], references: [id])
   user_id          String
-  delivery_address String
+  address String
   total_price      Float
   sale_date        DateTime      @default(now())
   status           Boolean       @default(false)
@@ -63,7 +68,7 @@ model Address {
   id               String @id @default(uuid())
   user             User   @relation(fields: [user_id], references: [id])
   user_id          String
-  delivery_address String
+  address String
   cep              Int
 
   @@map("user_address")
