@@ -13,7 +13,11 @@ export default class UserModel {
   }
 
   public async getAll (): Promise<User[]> {
-    return await this.prisma.findMany({})
+    return await this.prisma.findMany({
+      include: {
+        delivery_address: true
+      }
+    })
   }
 
   public async getById (id: string): Promise<User | null> {
