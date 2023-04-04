@@ -1,5 +1,5 @@
 import { UserModel } from '../../Database/Models'
-import type { Address, User } from '@prisma/client'
+import type { User, Address } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import generateJWT from '../../Auth/generateJWT'
 import type { IUserReturn } from '../Interface/User.interface'
