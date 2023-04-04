@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express'
 
 export default class ErrorHandler {
-  public handle (error: Error, req: Request, res: Response, next: NextFunction): void {
+  public handle (error: Error, _req: Request, res: Response, next: NextFunction): void {
     switch (error.message) {
       case 'UserNotFound':
         res.status(404).json({ message: "User doesn't exist!" })
