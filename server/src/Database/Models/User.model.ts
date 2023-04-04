@@ -30,7 +30,10 @@ export default class UserModel {
 
   public async getById (id: string): Promise<User | null> {
     return await this.prisma.findFirst({
-      where: { id }
+      where: { id },
+      include: {
+        address: true
+      }
     })
   }
 
@@ -49,7 +52,10 @@ export default class UserModel {
 
   public async delete (id: string): Promise<User> {
     return await this.prisma.delete({
-      where: { id }
+      where: { id },
+      include: {
+        address: true
+      }
     })
   }
 }
