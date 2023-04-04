@@ -1,6 +1,7 @@
-import type { User } from '@prisma/client'
+import type { Address, User } from '@prisma/client'
 import type { Request, Response, NextFunction } from 'express'
 import { UserService } from '../Domain/Services'
+import { IAddress } from '../Domain/Interface/User.interface'
 
 export default class UserController {
   protected service: UserService
@@ -20,9 +21,9 @@ export default class UserController {
   }
 
   public async signup (): Promise<Response | undefined> {
-    const newUser: User = this.req.body
+    const user: User = this.req.body
     try {
-      const { token, result } = await this.service.create(newUser)
+      const { token, result } = await this.service.create(user, address)
 
       return this.res.status(201).json({ token, result })
     } catch (error) {

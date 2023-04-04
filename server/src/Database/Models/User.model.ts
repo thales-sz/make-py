@@ -1,5 +1,5 @@
 import { prismaClient } from '../prismaClient'
-import { Address, type User } from '@prisma/client'
+import type { Address, User } from '@prisma/client'
 
 export default class UserModel {
   protected prisma
@@ -12,7 +12,11 @@ export default class UserModel {
     return await this.prisma.create({
       data: {
         ...user,
-        address: address
+        address: {
+          create: [
+            { ...address }
+          ]
+        }
       }
     })
   }
@@ -20,7 +24,7 @@ export default class UserModel {
   public async getAll (): Promise<User[]> {
     return await this.prisma.findMany({
       include: {
-        delivery_address: true
+        address: true
       }
     })
   }

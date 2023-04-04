@@ -1,5 +1,5 @@
 import { UserModel } from '../../Database/Models'
-import { type User } from '@prisma/client'
+import type { Address, User } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import generateJWT from '../../Auth/generateJWT'
 import type { IUserReturn } from '../Interface/User.interface'
@@ -15,14 +15,14 @@ export default class UserService {
     return await this.model.getAll()
   }
 
-  public async create (user: User): Promise<IUserReturn> {
+  public async create (user: User, address: Address): Promise<IUserReturn> {
     const oldUser = await this.model.getByEmail(user.email)
 
     if (oldUser != null) throw new Error('UserExists')
 
     user.password = await bcrypt.hash(user.password, 12)
 
-    const result = await this.model.create(user)
+    const result = await this.model.create(user, address)
 
     const token = generateJWT(result)
 

@@ -1,21 +1,22 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 model User {
-  id               String    @id @default(uuid())
-  first_name       String
-  last_name        String
-  email            String    @unique
-  role             Role    @default(USER)
-  password         String
-  sale             Sale[]
-  address Address[]
+  id         String    @id @default(uuid())
+  first_name String
+  last_name  String
+  email      String    @unique
+  role       Role      @default(USER)
+  password   String
+  sale       Sale[]
+  address    Address?
 
   @@map("users")
 }
@@ -38,17 +39,17 @@ model Product {
 }
 
 model Sale {
-  id               String        @id @default(uuid())
-  user             User          @relation(fields: [user_id], references: [id])
-  user_id          String
-  address String
-  total_price      Float
-  sale_date        DateTime      @default(now())
-  status           Boolean       @default(false)
-  sale_product     SaleProduct[]
+  id           String        @id @default(uuid())
+  user         User          @relation(fields: [user_id], references: [id])
+  user_id      String
+  address      String
+  total_price  Float
+  sale_date    DateTime      @default(now())
+  status       Boolean       @default(false)
+  sale_product SaleProduct[]
 
-  @@map("sales")
   @@index([user_id])
+  @@map("sales")
 }
 
 model SaleProduct {
@@ -59,20 +60,20 @@ model SaleProduct {
   quantity   Int
 
   @@id([sale_id, product_id])
-  @@map("sales_products")
   @@index([sale_id])
   @@index([product_id])
+  @@map("sales_products")
 }
 
 model Address {
-  id               String @id @default(uuid())
-  user             User   @relation(fields: [user_id], references: [id])
-  user_id          String
+  id      String @id @default(uuid())
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String @unique
   address String
-  cep              Int
+  cep     Int
 
-  @@map("user_address")
   @@index([user_id])
+  @@map("user_address")
 }
 
 model Stock {
