@@ -37,10 +37,16 @@ export default class UserModel {
     })
   }
 
-  public async update (id: string, obj: User): Promise<User | null> {
+  public async update (id: string, obj: User, address: Address): Promise<User | null> {
     return await this.prisma.update({
       where: { id },
-      data: { ...obj }
+      data: {
+        ...obj,
+        address: {
+          update:
+            { ...address }
+        }
+      }
     })
   }
 

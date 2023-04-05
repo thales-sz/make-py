@@ -54,4 +54,12 @@ export default class UserService {
 
     return await this.model.delete(id)
   }
+
+  public async update (id: string, user: User, address: Address): Promise<User | null> {
+    const oldUser = await this.model.getById(id)
+
+    if (oldUser == null) throw new Error('UserNotFound')
+
+    return await this.model.update(id, user, address)
+  }
 }

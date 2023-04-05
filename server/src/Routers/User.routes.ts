@@ -11,5 +11,6 @@ router.get('/:id', async (req, res, next) => await new UserController(req, res, 
 router.post('/signin', validationMiddleware.userSignIn, async (req, res, next) => await new UserController(req, res, next).signin())
 router.post('/signup', validationMiddleware.userSignUp, async (req, res, next) => await new UserController(req, res, next).signup())
 router.delete('/:id', async (req, res, next) => await new UserController(req, res, next).delete())
+router.patch('/:id', validationMiddleware.userSignIn, async (req, res, next) => await new UserController(req, res, next).update())
 
 export default router
