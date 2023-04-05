@@ -75,9 +75,9 @@ export default class UserController {
     const address: IAddress = user.address
 
     try {
-      const response = await this.service.update(id, user, address)
+      await this.service.update(id, user, address)
 
-      return this.res.status(204).json(response)
+      return this.res.sendStatus(204)
     } catch (error) {
       this.next(error)
     }
