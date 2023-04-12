@@ -4,6 +4,8 @@ import { compareSync } from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { UserEntity } from 'src/users/entities/user.entity';
 
+import 'dotenv/config';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -11,22 +13,18 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(
-    email: string,
-    password: string,
-  ): Promise<UserEntity | null> {
+  async validateUser(email: string, pass: string): Promise<UserEntity | null> {
     const user = await this.usersService.findOneByEmail(email);
-    if (user && compareSync(password, user.password)) {
+    if (user && compareSync(pass, user.password)) {
       const { password, ...result } = user;
       return result;
     }
     return null;
   }
 
-  async signin(user: UserEntity) {
-    const payload = { email: user.email, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+  async signIn(user: UserEntity) {
+    const payload = { email: user.email, sub: user.id, role: user.role };
+
+    return this.jwtService.signAsync(payload);
   }
 }
