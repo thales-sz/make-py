@@ -139,4 +139,4 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-server-express
+/server-express

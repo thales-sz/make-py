@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 import 'dotenv/config';
-import { PrismaService } from './database/prisma.service';
+import { PrismaService } from './prisma/prisma.service';
 
 const PORT = process.env.PORT;
 
