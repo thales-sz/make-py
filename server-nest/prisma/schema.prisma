@@ -9,15 +9,15 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
-  first_name   String
-  last_name    String
-  email        String   @unique
-  role         Role     @default(USER)
-  password     String
-  sale         Sale[]
-  phone_number String
-  address      Address?
+  id          String   @id @default(uuid())
+  firstName   String   @map("first_name")
+  lastName    String   @map("last_name")
+  email       String   @unique
+  role        Role     @default(USER)
+  password    String
+  sale        Sale[]
+  phoneNumber String   @map("phone_number")
+  address     Address?
 
   @@map("users")
 }
@@ -28,58 +28,58 @@ enum Role {
 }
 
 model Product {
-  id             String        @id @default(uuid())
-  price          Float
-  name           String        @unique
-  description    String
-  stock_quantity Stock?
-  created_at     DateTime      @default(now())
-  sale_product   SaleProduct[]
+  id            String        @id @default(uuid())
+  price         Float
+  name          String        @unique
+  description   String
+  stockQuantity Stock?
+  createdAt     DateTime      @default(now())
+  saleProduct   SaleProduct[]
 
   @@map("products")
 }
 
 model Sale {
-  id           String        @id @default(uuid())
-  user         User?         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user_id      String
-  address      String
-  total_price  Float
-  sale_date    DateTime      @default(now())
-  status       Boolean       @default(false)
-  sale_product SaleProduct[]
+  id          String        @id @default(uuid())
+  user        User?         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId      String        @map("user_id")
+  address     String
+  totalPrice  Float         @map("total_price")
+  saleDate    DateTime      @default(now()) @map("sale_date")
+  status      Boolean       @default(false)
+  saleProduct SaleProduct[]
 
-  @@index([user_id])
+  @@index([userId])
   @@map("sales")
 }
 
 model SaleProduct {
-  sale       Sale?    @relation(fields: [sale_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  sale_id    String
-  product    Product? @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product_id String
-  quantity   Int
+  sale      Sale?    @relation(fields: [saleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  saleId    String   @map("sale_id")
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId String   @map("product_id")
+  quantity  Int
 
-  @@id([sale_id, product_id])
-  @@index([sale_id])
-  @@index([product_id])
+  @@id([saleId, productId])
+  @@index([saleId])
+  @@index([productId])
   @@map("sales_products")
 }
 
 model Address {
-  user    User?  @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id String @unique
+  user    User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String @unique @map("user_id")
   address String
   cep     Int
 
-  @@index([user_id])
+  @@index([userId])
   @@map("user_address")
 }
 
 model Stock {
-  product    Product? @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product_id String   @unique
-  quantity   Int
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productId String   @unique @map("product_id")
+  quantity  Int
 
   @@map("stock")
 }
