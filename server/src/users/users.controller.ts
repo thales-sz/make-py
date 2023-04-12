@@ -43,6 +43,7 @@ export class UsersController {
     return user;
   }
 
+  @Public()
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     const user = await this.usersService.findOne(id);

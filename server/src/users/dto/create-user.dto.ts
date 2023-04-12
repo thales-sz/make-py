@@ -3,6 +3,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsPhoneNumber,
+  IsString,
   IsUUID,
   Length,
   MinLength,
@@ -10,14 +11,17 @@ import {
 
 export class CreateUserDto {
   @IsUUID()
+  @IsString()
   @IsOptional()
   @Length(36)
   id: string;
 
+  @IsString()
   @IsNotEmpty()
   firstName: string;
 
   @IsNotEmpty()
+  @IsString()
   lastName: string;
 
   @IsEmail()
@@ -25,13 +29,16 @@ export class CreateUserDto {
   email: string;
 
   @IsNotEmpty()
+  @IsString()
   @MinLength(6)
   password: string;
 
   @IsNotEmpty()
+  @IsString()
   @IsPhoneNumber('BR')
   phoneNumber: string;
 
-  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
   role: 'ADMIN' | 'USER';
 }

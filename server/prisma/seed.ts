@@ -1,10 +1,13 @@
 import { PrismaClient, Role } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 import 'dotenv/config';
 
 const prisma = new PrismaClient();
 
 async function main() {
+  const password = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 12);
+
   const admin = await prisma.user.upsert({
     where: { email: 'admin@email.com' },
     update: {},
@@ -12,7 +15,7 @@ async function main() {
       email: 'admin@email.com',
       firstName: 'Thales',
       lastName: 'Admin',
-      password: process.env.ADMIN_PASSWORD,
+      password,
       phoneNumber: '+5524123456789',
       role: Role.ADMIN,
     },
