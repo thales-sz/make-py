@@ -45,11 +45,16 @@ model Sale {
   deliveryAddress DeliveryAddress?
   totalPrice      Float            @map("total_price")
   saleDate        DateTime         @default(now()) @map("sale_date")
-  status          Boolean          @default(false)
+  status          DeliveryStatus   @default(IN_PROGRESS)
   saleProduct     SaleProduct[]
 
   @@index([userId])
   @@map("sales")
+}
+
+enum DeliveryStatus {
+  DONE
+  IN_PROGRESS
 }
 
 model SaleProduct {
