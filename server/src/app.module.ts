@@ -7,10 +7,11 @@ import { SalesModule } from './sales/sales.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
+import { HealthCheckController } from './app.controller';
 
 @Module({
   imports: [UsersModule, PrismaModule, ProductsModule, SalesModule, AuthModule],
-  controllers: [],
+  controllers: [HealthCheckController],
   providers: [
     {
       provide: APP_GUARD,
