@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id         String    @id @default(uuid())
+  first_name String
+  last_name  String
+  email      String    @unique
+  role       Role      @default(USER)
+  password   String
+  sale       Sale[]
+  phone_number String
+  address    Address?
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model Product {
+  id             String        @id @default(uuid())
+  price          Float
+  name           String        @unique
+  description    String
+  stock_quantity Stock?
+  created_at     DateTime      @default(now())
+  sale_product   SaleProduct[]
+
+  @@map("products")
+}
+
+model Sale {
+  id           String        @id @default(uuid())
+  user         User?          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id      String
+  address      String
+  total_price  Float
+  sale_date    DateTime      @default(now())
+  status       Boolean       @default(false)
+  sale_product SaleProduct[]
+
+  @@index([user_id])
+  @@map("sales")
+}
+
+model SaleProduct {
+  sale       Sale?    @relation(fields: [sale_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  sale_id    String
+  product    Product? @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product_id String
+  quantity   Int
+
+  @@id([sale_id, product_id])
+  @@index([sale_id])
+  @@index([product_id])
+  @@map("sales_products")
+}
+
+model Address {
+  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id String @unique
+  address String
+  cep     Int
+
+  @@index([user_id])
+  @@map("user_address")
+}
+
+model Stock {
+  product    Product? @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product_id String  @unique
+  quantity   Int
+
+  @@map("stock")
+}
