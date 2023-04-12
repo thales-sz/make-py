@@ -7,7 +7,6 @@ import {
   Length,
   MinLength,
 } from 'class-validator';
-import { SaleEntity } from 'src/sales/entities/sale.entity';
 
 export class CreateUserDto {
   @IsUUID()
@@ -32,9 +31,6 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsPhoneNumber('BR')
   phoneNumber: string;
-
-  @IsOptional()
-  sale: SaleEntity[];
 
   @IsNotEmpty()
   role: 'ADMIN' | 'USER';
