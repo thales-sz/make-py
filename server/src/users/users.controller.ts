@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ConflictException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,6 +18,10 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
+    const oldUser = this.usersService.findOneByEmail(createUserDto.email);
+
+    if (oldUser) throw new ConflictException(`This email is already in use`);
+
     return this.usersService.create(createUserDto);
   }
 
