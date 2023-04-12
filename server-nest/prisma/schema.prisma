@@ -9,15 +9,14 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  firstName   String   @map("first_name")
-  lastName    String   @map("last_name")
-  email       String   @unique
-  role        Role     @default(USER)
+  id          String @id @default(uuid())
+  firstName   String @map("first_name")
+  lastName    String @map("last_name")
+  email       String @unique
+  role        Role   @default(USER)
   password    String
   sale        Sale[]
-  phoneNumber String   @map("phone_number")
-  address     Address?
+  phoneNumber String @map("phone_number")
 
   @@map("users")
 }
@@ -40,14 +39,14 @@ model Product {
 }
 
 model Sale {
-  id          String        @id @default(uuid())
-  user        User?         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId      String        @map("user_id")
-  address     String
-  totalPrice  Float         @map("total_price")
-  saleDate    DateTime      @default(now()) @map("sale_date")
-  status      Boolean       @default(false)
-  saleProduct SaleProduct[]
+  id              String           @id @default(uuid())
+  user            User?            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String           @map("user_id")
+  deliveryAddress DeliveryAddress?
+  totalPrice      Float            @map("total_price")
+  saleDate        DateTime         @default(now()) @map("sale_date")
+  status          Boolean          @default(false)
+  saleProduct     SaleProduct[]
 
   @@index([userId])
   @@map("sales")
@@ -66,14 +65,14 @@ model SaleProduct {
   @@map("sales_products")
 }
 
-model Address {
-  user    User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String @unique @map("user_id")
+model DeliveryAddress {
+  sale    Sale   @relation(fields: [saleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  saleId  String @unique @map("sale_id")
   address String
   cep     Int
 
-  @@index([userId])
-  @@map("user_address")
+  @@index([saleId])
+  @@map("delivery_address")
 }
 
 model Stock {
@@ -81,5 +80,5 @@ model Stock {
   productId String   @unique @map("product_id")
   quantity  Int
 
-  @@map("stock")
+  @@map("stocks")
 }
