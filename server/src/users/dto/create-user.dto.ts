@@ -1,6 +1,20 @@
-import { IsEmail, IsNotEmpty, IsPhoneNumber, Length } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsPhoneNumber,
+  IsUUID,
+  Length,
+  MinLength,
+} from 'class-validator';
+import { SaleEntity } from 'src/sales/entities/sale.entity';
 
 export class CreateUserDto {
+  @IsUUID()
+  @IsOptional()
+  @Length(36)
+  id: string;
+
   @IsNotEmpty()
   firstName: string;
 
@@ -12,10 +26,16 @@ export class CreateUserDto {
   email: string;
 
   @IsNotEmpty()
-  @Length(6, 16)
+  @MinLength(6)
   password: string;
 
   @IsNotEmpty()
   @IsPhoneNumber('BR')
   phoneNumber: string;
+
+  @IsOptional()
+  sale: SaleEntity[];
+
+  @IsNotEmpty()
+  role: 'ADMIN' | 'USER';
 }
