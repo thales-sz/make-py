@@ -1,35 +1,20 @@
+import { IsEmail, IsNotEmpty, IsPhoneNumber, Length } from 'class-validator';
+
 export class CreateUserDto {
-  id: string;
+  @IsNotEmpty()
   firstName: string;
+
+  @IsNotEmpty()
   lastName: string;
+
+  @IsEmail()
   email: string;
-  role: Role;
+
+  @IsNotEmpty()
+  @Length(6, 16)
   password: string;
-  sale: Sale;
+
+  @IsNotEmpty()
+  @IsPhoneNumber('BR')
   phoneNumber: string;
-}
-
-export enum Role {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-}
-
-export interface Sale {
-  id: string;
-  userId: string;
-  deliveryAddress: DeliveryAddress;
-  totalPrice: number;
-  saleDate: Date;
-  status: DeliveryStatus;
-}
-
-enum DeliveryStatus {
-  DONE = 'DONE',
-  IN_PROGRESS = 'IN_PROGRESS',
-}
-
-export interface DeliveryAddress {
-  saleId: string;
-  address: string;
-  cep: string;
 }
