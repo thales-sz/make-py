@@ -1,6 +1,4 @@
-import { Sale } from '@prisma/client';
-
-export class SaleEntity implements Sale {
+export class SaleEntity {
   id: string;
   userId: string;
   totalPrice: number;
