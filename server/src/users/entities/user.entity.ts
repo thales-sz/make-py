@@ -4,10 +4,6 @@ import { Order } from 'src/orders/entities/order.entity';
 
 export type UserDocument = HydratedDocument<User>;
 
-enum Role {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-}
 @Schema()
 export class User {
   @Prop({ type: String, required: true })
