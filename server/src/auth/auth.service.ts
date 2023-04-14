@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compareSync } from 'bcrypt';
 import { UsersService } from '../users/users.service';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { User } from 'src/users/entities/user.entity';
 
 import 'dotenv/config';
 
@@ -13,7 +13,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<UserEntity | null> {
+  async validateUser(email: string, pass: string): Promise<User | null> {
     const user = await this.usersService.findOneByEmail(email);
     if (user && compareSync(pass, user.password)) {
       return user;
@@ -21,8 +21,8 @@ export class AuthService {
     return null;
   }
 
-  async signIn(user: UserEntity) {
-    const payload = { email: user.email, sub: user.id, role: user.role };
+  async signIn(user: User) {
+    const payload = { email: user.email, role: user.role };
 
     return this.jwtService.signAsync(payload);
   }

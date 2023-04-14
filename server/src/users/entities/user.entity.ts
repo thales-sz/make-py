@@ -1,11 +1,36 @@
-import { Role, User } from '@prisma/client';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Order } from 'src/orders/entities/order.entity';
 
-export class UserEntity implements User {
-  id: string;
+export type UserDocument = HydratedDocument<User>;
+
+@Schema()
+export class User {
+  @Prop({ type: String, required: true })
   firstName: string;
+
+  @Prop({ type: String, required: true })
   lastName: string;
+
+  @Prop({ type: String, required: true })
   email: string;
+
+  @Prop({ type: String, required: true })
   password: string;
-  role: Role;
+
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['ADMIN', 'USER'],
+    default: 'USER',
+  })
+  role: string;
+
+  @Prop({ type: String, required: true })
   phoneNumber: string;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }] })
+  order: Order[];
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);
