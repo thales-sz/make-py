@@ -14,14 +14,14 @@ export class Order {
   @Prop()
   saleDate: Date;
 
-  @Prop()
-  status: DeliveryStatus;
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['IN_PROGRESS', 'DONE'],
+    default: 'IN_PROGRESS',
+  })
+  status: string;
 
   @Prop()
   deliveryAddress: string;
-}
-
-enum DeliveryStatus {
-  DONE = 'DONE',
-  IN_PROGRESS = 'IN_PROGRESS',
 }

@@ -22,13 +22,18 @@ export class User {
   @Prop({ type: String, required: true })
   password: string;
 
-  @Prop({ type: Role, required: false })
-  role: Role;
+  @Prop({
+    type: String,
+    required: true,
+    enum: ['ADMIN', 'USER'],
+    default: 'USER',
+  })
+  role: string;
 
   @Prop({ type: String, required: true })
   phoneNumber: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Order' })
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }] })
   order: Order[];
 }
 
