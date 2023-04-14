@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Order } from 'src/orders/entities/order.entity';
 
-export type UserDocument = User & Document;
+export type UserDocument = HydratedDocument<User>;
 
 enum Role {
   ADMIN = 'ADMIN',
@@ -26,6 +27,9 @@ export class User {
 
   @Prop({ type: String, required: true })
   phoneNumber: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Order' })
+  order: Order[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

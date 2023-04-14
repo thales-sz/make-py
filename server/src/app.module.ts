@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { HealthCheckController } from './app.controller';
+import { OrdersModule } from './orders/orders.module';
 
 import 'dotenv/config';
 
@@ -20,6 +21,7 @@ const MONGO_URL = process.env.MONGO_URL;
     SalesModule,
     AuthModule,
     MongooseModule.forRoot(MONGO_URL),
+    OrdersModule,
   ],
   controllers: [HealthCheckController],
   providers: [
