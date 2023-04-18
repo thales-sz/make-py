@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { Public } from './common/public';
+import { Public } from './common/metadata';
 
 @Controller('health')
 export class HealthCheckController {
