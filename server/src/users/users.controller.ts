@@ -8,13 +8,11 @@ import {
   Delete,
   ConflictException,
   NotFoundException,
-  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Admin, Public } from 'src/common/metadata';
-import { RoleGuard } from 'src/auth/role.guard';
 
 @Controller('users')
 export class UsersController {
@@ -36,12 +34,10 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @UseGuards(RoleGuard)
+  @Admin()
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const user = await this.usersService.findOne(id);
-
-    console.log(user);
 
     if (!user) throw new NotFoundException(`User with id: '${id}' not found`);
 

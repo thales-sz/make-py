@@ -10,6 +10,7 @@ import { HealthCheckController } from './app.controller';
 import { OrdersModule } from './orders/orders.module';
 
 import 'dotenv/config';
+import { RoleGuard } from './auth/role.guard';
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -26,6 +27,10 @@ const MONGO_URL = process.env.MONGO_URL;
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
     },
   ],
 })
