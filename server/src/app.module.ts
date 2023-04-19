@@ -11,7 +11,7 @@ import { OrdersModule } from './orders/orders.module';
 
 import 'dotenv/config';
 import { RoleGuard } from './auth/role.guard';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -36,6 +36,10 @@ const MONGO_URL = process.env.MONGO_URL;
     {
       provide: APP_GUARD,
       useClass: RoleGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })
