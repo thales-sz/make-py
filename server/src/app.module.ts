@@ -21,6 +21,10 @@ const MONGO_URL = process.env.MONGO_URL;
     OrdersModule,
     AuthModule,
     MongooseModule.forRoot(MONGO_URL),
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
   ],
   controllers: [HealthCheckController],
   providers: [
