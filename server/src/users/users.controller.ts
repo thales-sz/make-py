@@ -8,11 +8,12 @@ import {
   Delete,
   ConflictException,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Public } from 'src/common/public';
+import { Admin, Public } from 'src/common/metadata';
 
 @Controller('users')
 export class UsersController {
@@ -23,17 +24,21 @@ export class UsersController {
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.usersService.findOneByEmail(createUserDto.email);
 
+    if (createUserDto.role)
+      throw new UnauthorizedException('You cannot assign a role to a user');
+
     if (user) throw new ConflictException(`This email is already in use`);
 
     return this.usersService.create(createUserDto);
   }
 
-  @Public()
+  @Admin()
   @Get()
   async findAll() {
     return this.usersService.findAll();
   }
 
+  @Admin()
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const user = await this.usersService.findOne(id);

@@ -4,17 +4,17 @@ import {
   IsOptional,
   IsPhoneNumber,
   IsString,
-  IsUUID,
-  Length,
   MinLength,
+  IsMongoId,
+  MaxLength,
 } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateUserDto {
-  @IsUUID()
+  @IsMongoId()
   @IsString()
   @IsOptional()
-  @Length(36)
-  id: string;
+  _id: ObjectId;
 
   @IsString()
   @IsNotEmpty()
@@ -31,6 +31,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   @MinLength(6)
+  @MaxLength(16)
   password: string;
 
   @IsNotEmpty()

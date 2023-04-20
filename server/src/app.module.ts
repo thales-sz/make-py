@@ -10,6 +10,8 @@ import { HealthCheckController } from './app.controller';
 import { OrdersModule } from './orders/orders.module';
 
 import 'dotenv/config';
+import { RoleGuard } from './auth/role.guard';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -20,12 +22,24 @@ const MONGO_URL = process.env.MONGO_URL;
     OrdersModule,
     AuthModule,
     MongooseModule.forRoot(MONGO_URL),
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
   ],
   controllers: [HealthCheckController],
   providers: [
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })
