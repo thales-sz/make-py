@@ -14,10 +14,14 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Admin, Public } from 'src/common/metadata';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   @Public()
   @Post()
@@ -29,7 +33,11 @@ export class UsersController {
 
     if (user) throw new ConflictException(`This email is already in use`);
 
-    return this.usersService.create(createUserDto);
+    const createdUser = await this.usersService.create(createUserDto);
+
+    const payload = { email: createdUser.email, role: createdUser.role };
+
+    return this.jwtService.signAsync(payload);
   }
 
   @Admin()

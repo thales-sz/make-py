@@ -4,6 +4,7 @@ import {
   UpdateQuery,
   Connection,
   SaveOptions,
+  Types,
 } from 'mongoose';
 import { AbstractDocument } from './abstract.schema';
 
@@ -15,9 +16,10 @@ export abstract class AbstractRepository<T extends AbstractDocument> {
 
   async create(document: Omit<T, '_id'>, options?: SaveOptions): Promise<T> {
     const createdDocument = new this.model({
+      _id: new Types.ObjectId(),
       ...document,
     });
-    return (await createdDocument.save(options)).toJSON() as unknown as T;
+    return (await createdDocument.save(options)).toJSON() as T;
   }
 
   async findOne(filterQuery: FilterQuery<T>): Promise<T | null> {

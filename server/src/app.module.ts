@@ -13,6 +13,7 @@ import * as Joi from 'joi';
 import 'dotenv/config';
 import { RoleGuard } from './auth/role.guard';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
+    JwtService,
   ],
 })
 export class AppModule {}

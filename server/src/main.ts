@@ -22,6 +22,7 @@ async function bootstrap() {
   await app.listen(configService.get('PORT'));
 
   const logger = new Logger(AppModule.name);
+
   logger.log(`Server is running on ${await app.getUrl()}`);
 }
 
