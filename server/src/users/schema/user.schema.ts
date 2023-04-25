@@ -1,11 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import { HydratedDocument, SchemaTypes, Types } from 'mongoose';
 import { Order } from 'src/orders/entities/order.entity';
 
 export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
+  @Prop({ type: SchemaTypes.ObjectId, required: false })
+  _id: Types.ObjectId;
+
   @Prop({ type: String, required: true })
   firstName: string;
 
@@ -29,7 +32,7 @@ export class User {
   @Prop({ type: String, required: true })
   phoneNumber: string;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Order' }] })
   order: Order[];
 }
 

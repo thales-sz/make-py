@@ -12,7 +12,12 @@ async function bootstrap() {
     logger: ['error', 'warn'],
   });
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
   await app
     .listen(PORT)

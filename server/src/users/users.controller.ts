@@ -38,7 +38,6 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Admin()
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const user = await this.usersService.findOne(id);
@@ -48,7 +47,6 @@ export class UsersController {
     return user;
   }
 
-  @Public()
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     const user = await this.usersService.findOne(id);

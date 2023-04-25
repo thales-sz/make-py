@@ -5,7 +5,7 @@ import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'src/users/entities/user.entity';
+import { User, UserSchema } from 'src/users/schema/user.schema';
 
 const jwtSecret = process.env.JWT_SECRET;
 

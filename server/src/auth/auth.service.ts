@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compareSync } from 'bcrypt';
 import { UsersService } from '../users/users.service';
-import { User } from 'src/users/entities/user.entity';
+import { User } from 'src/users/schema/user.entity';
 
 import 'dotenv/config';
 
