@@ -33,7 +33,7 @@ export class User {
   phoneNumber: string;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Order' }] })
-  order: Order[];
+  order?: Order[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

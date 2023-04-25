@@ -13,17 +13,15 @@ export class UsersService {
   async create(createUserDto: CreateUserDto): Promise<User> {
     createUserDto.password = bcrypt.hashSync(createUserDto.password, 12);
 
-    const createdUser = this.usersRepository.create({ ...createUserDto });
-
-    return createdUser.save();
+    return this.usersRepository.create({ ...createUserDto });
   }
 
   async findAll(): Promise<User[]> {
-    return this.usersRepository.find().exec();
+    return this.usersRepository.findAll({});
   }
 
   async findOne(id: string): Promise<User> {
-    return this.usersRepository.findById(id);
+    return this.usersRepository.findOne({ _id: id });
   }
 
   async findOneByEmail(email: string): Promise<User> {
@@ -31,14 +29,13 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
-    return this.usersRepository.findByIdAndUpdate(
+    return this.usersRepository.findOneAndUpdate(
       { _id: id },
       { ...updateUserDto },
-      { new: true },
     );
   }
 
-  async remove(id: string): Promise<User | null> {
-    return this.usersRepository.findByIdAndDelete({ _id: id });
+  async remove(id: string) {
+    return this.usersRepository.delete({ _id: id });
   }
 }
