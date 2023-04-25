@@ -10,6 +10,7 @@ import {
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { Public } from 'src/common/metadata';
 
 @Controller('orders')
 export class OrdersController {
@@ -20,6 +21,7 @@ export class OrdersController {
     return this.ordersService.create(createOrderDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.ordersService.findAll();
@@ -27,16 +29,16 @@ export class OrdersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
+    return this.ordersService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(+id, updateOrderDto);
+    return this.ordersService.update(id, updateOrderDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.ordersService.remove(+id);
+    return this.ordersService.remove(id);
   }
 }
