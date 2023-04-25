@@ -9,18 +9,23 @@ import {
   ConflictException,
   NotFoundException,
   UnauthorizedException,
+  HttpCode,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Admin, Public } from 'src/common/metadata';
+import { JwtService } from '@nestjs/jwt';
 
-@Controller('users')
+@Controller()
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   @Public()
-  @Post()
+  @Post('signup')
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.usersService.findOneByEmail(createUserDto.email);
 
@@ -29,17 +34,20 @@ export class UsersController {
 
     if (user) throw new ConflictException(`This email is already in use`);
 
-    return this.usersService.create(createUserDto);
+    const createdUser = await this.usersService.create(createUserDto);
+
+    const payload = { email: createdUser.email, role: createdUser.role };
+
+    return this.jwtService.signAsync(payload);
   }
 
   @Admin()
-  @Get()
+  @Get('users')
   async findAll() {
     return this.usersService.findAll();
   }
 
-  @Admin()
-  @Get(':id')
+  @Get('user/:id')
   async findOne(@Param('id') id: string) {
     const user = await this.usersService.findOne(id);
 
@@ -48,8 +56,7 @@ export class UsersController {
     return user;
   }
 
-  @Public()
-  @Patch(':id')
+  @Patch('user/:id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     const user = await this.usersService.findOne(id);
 
@@ -58,7 +65,8 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
-  @Delete(':id')
+  @HttpCode(204)
+  @Delete('user/:id')
   async remove(@Param('id') id: string) {
     const user = await this.usersService.findOne(id);
 

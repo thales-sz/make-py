@@ -8,13 +8,13 @@ import {
   IsMongoId,
   MaxLength,
 } from 'class-validator';
-import { ObjectId } from 'mongoose';
+import { Types } from 'mongoose';
 
 export class CreateUserDto {
   @IsMongoId()
   @IsString()
   @IsOptional()
-  _id: ObjectId;
+  _id: Types.ObjectId;
 
   @IsString()
   @IsNotEmpty()
