@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/users/schema/user.schema';
+import { UsersRepository } from 'src/users/users.repository';
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -19,7 +20,7 @@ const jwtSecret = process.env.JWT_SECRET;
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
-  providers: [AuthService, UsersService],
+  providers: [AuthService, UsersService, UsersRepository],
   controllers: [AuthController],
   exports: [AuthService],
 })

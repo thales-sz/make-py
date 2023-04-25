@@ -1,15 +1,13 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
 
 import 'dotenv/config';
-
-const PORT = process.env.PORT;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
-    logger: ['error', 'warn'],
   });
 
   app.useGlobalPipes(
@@ -19,12 +17,12 @@ async function bootstrap() {
     }),
   );
 
-  await app
-    .listen(PORT)
-    .then(() => {
-      console.log(`App running on PORT => ${PORT}`);
-    })
-    .catch((err) => console.error(`Error while trying to server up: ${err}`));
+  const configService = app.get<ConfigService>(ConfigService);
+
+  await app.listen(configService.get('PORT'));
+
+  const logger = new Logger(AppModule.name);
+  logger.log(`Server is running on ${await app.getUrl()}`);
 }
 
 bootstrap();

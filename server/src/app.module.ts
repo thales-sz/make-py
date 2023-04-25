@@ -8,7 +8,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { HealthCheckController } from './app.controller';
 import { OrdersModule } from './orders/orders.module';
 import { DatabaseModule } from './database/database.module';
-import Joi from 'joi';
+import * as Joi from 'joi';
 
 import 'dotenv/config';
 import { RoleGuard } from './auth/role.guard';
