@@ -16,12 +16,12 @@ function Header (): JSX.Element {
           <span>by Pyetra Almeida</span>
         </nav>
 
-        <h1 className='md:text-4xl font-ace-sc max-sm:text-2xl h-fit mt-7 pb-2'>M A K E P Y</h1>
+        <h1 className='md:text-4xl font-ace-sc max-sm:text-2xl h-fit mt-7 pb-2 tracking-widest'>MAKEPY</h1>
 
-        <nav className='flex gap-4 justify-center text-center mr-5 w-44 mt-7'>
+        <nav className='flex gap-2 justify-center text-center mr-3 md:w-44 mt-7 max-sm:text-sm'>
           <a>SignIn</a>
           <a>Cart</a>
-          <button className='h-0'>Search</button>
+          <button className='h-2'>Search</button>
         </nav>
       </section>
       <nav className='flex text-slate-100 gap-2 mx-auto text-base font-semibold pb-2'>
