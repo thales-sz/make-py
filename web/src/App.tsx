@@ -7,7 +7,7 @@ import Checkout from './pages/Checkout'
 
 function App (): JSX.Element {
   return (
-    <main className='flex flex-col h-screen bg-slate-700'>
+    <main className='flex flex-col h-screen'>
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="/checkout" element={ <Checkout /> } />
