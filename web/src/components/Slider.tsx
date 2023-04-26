@@ -5,6 +5,9 @@ import { RxDotFilled } from 'react-icons/rx'
 function Slider (): JSX.Element {
   const slides = [
     {
+      url: 'https://images.unsplash.com/photo-1617422275558-e5f616302690?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+    },
+    {
       url: 'https://images8.alphacoders.com/111/1110066.jpg'
     },
     {
@@ -15,9 +18,6 @@ function Slider (): JSX.Element {
     },
     {
       url: 'https://images.unsplash.com/photo-1560130055-e3306e04884b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1202&q=80'
-    },
-    {
-      url: 'https://images.unsplash.com/photo-1617422275558-e5f616302690?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
     },
     {
       url: 'https://content.syndigo.com/asset/28ba0488-7526-4b85-aaa6-ee027bc80f21/1920.jpeg'
