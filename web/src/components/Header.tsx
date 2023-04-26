@@ -21,7 +21,7 @@ function Header (): JSX.Element {
         <nav className='flex gap-2 justify-center text-center mr-3 md:w-44 mt-7 max-sm:text-sm'>
           <a>SignIn</a>
           <a>Cart</a>
-          <button className='h-2'>Search</button>
+          <button className='h-fit'>Search</button>
         </nav>
       </section>
       <nav className='flex text-slate-100 gap-2 mx-auto text-base font-semibold pb-2'>
