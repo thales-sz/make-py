@@ -5,30 +5,46 @@ function Header (): JSX.Element {
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 200) {
-      setHeaderBlack(true); return
-    } setHeaderBlack(false)
+      setHeaderBlack(true)
+      return
+    }
+    setHeaderBlack(false)
   })
 
   return (
-    <header className={`${!headerBlack ? 'bg-color-black' : 'bg-black bg-gradient-to-b from-black to-transparent'} fixed top flex flex-col hover:bg-black bg-gradient-to-b from-black to-transparent text-slate-100 z-10 w-full font-bold max-h-40`}>
-      <section className='flex justify-between mt-3 font-semibold'>
-        <nav className='md:visible invisible md:w-44 w-0 mt-7 font-thin ml-2'>
+    <header
+      className={`${
+        !headerBlack
+          ? 'bg-color-black'
+          : 'bg-slate-900 bg-gradient-to-b from-black to-transparent'
+      } top fixed z-10 flex max-h-40 w-full flex-col bg-gradient-to-b from-black to-transparent font-bold text-slate-100 hover:bg-slate-900`}
+    >
+      <section className="mt-3 flex justify-between font-semibold">
+        <nav className="invisible mt-7 ml-2 w-0 font-thin md:visible md:w-44">
           <span>by Pyetra Almeida</span>
         </nav>
 
-        <h1 className='md:text-4xl font-ace-sc max-sm:text-2xl h-fit mt-7 pb-2 tracking-widest'>MAKEPY</h1>
+        <h1 className="mt-7 h-fit pb-2 font-ace-sc tracking-widest max-sm:text-2xl md:text-4xl">
+          MAKEPY
+        </h1>
 
-        <nav className='flex gap-2 justify-center text-center mr-3 md:w-44 mt-7 max-sm:text-sm'>
+        <nav className="mr-3 mt-7 flex justify-center gap-2 text-center max-sm:text-sm md:w-44">
           <a>SignIn</a>
           <a>Cart</a>
-          <button className='h-fit'>Search</button>
+          <button className="h-fit">Search</button>
         </nav>
       </section>
-      <nav className='flex text-slate-100 gap-2 mx-auto text-base font-semibold pb-2'>
-        <a className='hover:cursor-pointer border-r border-slate-100 pr-2'>PELE</a>
-        <a className='hover:cursor-pointer border-r border-slate-100 pr-2'>OLHOS</a>
-        <a className='hover:cursor-pointer border-r border-slate-100 pr-2'>BOCA</a>
-        <a className='hover:cursor-pointer'>ACESSÓRIOS</a>
+      <nav className="mx-auto flex gap-2 pb-2 text-base font-semibold text-slate-100">
+        <a className="border-r border-slate-100 pr-2 hover:cursor-pointer">
+          PELE
+        </a>
+        <a className="border-r border-slate-100 pr-2 hover:cursor-pointer">
+          OLHOS
+        </a>
+        <a className="border-r border-slate-100 pr-2 hover:cursor-pointer">
+          BOCA
+        </a>
+        <a className="hover:cursor-pointer">ACESSÓRIOS</a>
       </nav>
     </header>
   )

@@ -5,13 +5,22 @@ import { RxDotFilled } from 'react-icons/rx'
 function Slider (): JSX.Element {
   const slides = [
     {
-      url: 'https://plus.unsplash.com/premium_photo-1665218521956-15c58d33b6fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80'
+      url: 'https://images8.alphacoders.com/111/1110066.jpg'
+    },
+    {
+      url: 'https://content.syndigo.com/asset/d8ae579b-3eb1-4a75-86e1-dba49124327f/1920.webp'
     },
     {
       url: 'https://images.unsplash.com/photo-1597225244660-1cd128c64284?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
     },
     {
       url: 'https://images.unsplash.com/photo-1560130055-e3306e04884b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1202&q=80'
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1617422275558-e5f616302690?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+    },
+    {
+      url: 'https://content.syndigo.com/asset/28ba0488-7526-4b85-aaa6-ee027bc80f21/1920.jpeg'
     }
   ]
 
@@ -34,23 +43,25 @@ function Slider (): JSX.Element {
   }
 
   return (
-    <div className='h-[600px] w-full m-auto relative group'>
+    <div className="group relative m-auto h-[600px] w-full">
       <div
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
-        className='w-full h-full bg-center bg-cover duration-500'
-       />
-      <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
+        className="h-full w-full bg-center duration-500 bg-no-repeat bg-cover"
+      />
+      <div className="absolute top-[50%] left-5 hidden -translate-x-0 translate-y-[-50%] cursor-pointer rounded-full bg-black/20 p-2 text-2xl text-white group-hover:block">
         <BsChevronCompactLeft onClick={prevSlide} size={30} />
       </div>
-      <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
+      <div className="absolute top-[50%] right-5 hidden -translate-x-0 translate-y-[-50%] cursor-pointer rounded-full bg-black/20 p-2 text-2xl text-white group-hover:block">
         <BsChevronCompactRight onClick={nextSlide} size={30} />
       </div>
-      <div className='flex justify-center m-auto absolute top-[95%] right-[49%] bg-black/20 rounded-full'>
+      <div className="absolute top-[95%] right-[35%] m-auto flex justify-center rounded-full bg-black/20">
         {slides.map((slide, slideIndex) => (
           <div
             key={slideIndex}
-            onClick={() => { goToSlide(slideIndex) }}
-            className='text-2xl cursor-pointer text-white'
+            onClick={() => {
+              goToSlide(slideIndex)
+            }}
+            className="cursor-pointer text-2xl text-white"
           >
             <RxDotFilled />
           </div>
