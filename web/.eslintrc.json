@@ -10,6 +10,8 @@
     "overrides": [
     ],
     "parserOptions": {
+        "project": "tsconfig.json",
+        "tsconfigRootDir": "./web",
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
@@ -17,5 +19,6 @@
         "react"
     ],
     "rules": {
+        "react/self-closing-comp": ["error", { "component": true, "html": true }]
     }
 }

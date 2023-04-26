@@ -2,12 +2,12 @@
 module.exports = {
   content: [
     'src/**/*.tsx',
-    './index.html',
+    './index.html'
   ],
   theme: {
     fontFamily: {
-      sans: ['Inter', 'sans-serif'],
-    },
+      sans: ['Inter', 'sans-serif']
+    }
   },
-  plugins: [],
+  plugins: []
 }
