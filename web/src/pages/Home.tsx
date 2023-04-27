@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../components/Header'
 import Slider from '../components/Slider'
 import ProductCard from '../components/ProductCard'
+import Footer from '../components/Footer'
 
 function Home (): JSX.Element {
   const data = { id: 2, name: 'Base Fenty Beuty', description: "Maquiagem à prova d'água para você arrasar nos bailes tudo", price: 200.95 }
@@ -15,6 +16,7 @@ function Home (): JSX.Element {
           return <ProductCard key={product.id} {...product}/>
         })}
       </section>
+      <Footer />
     </div>
   )
 }
