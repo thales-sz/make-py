@@ -31,9 +31,9 @@ function Header (): JSX.Element {
         </h1>
 
         <nav className="mr-3 mt-7 flex justify-center gap-2 text-center max-sm:text-sm md:w-44">
-          <a onClick={() => { navigate('/login') }} className='hover:cursor-pointer'>Sign In</a>
-          <a>Cart</a>
-          <button className="h-fit">Search</button>
+          <a onClick={() => { navigate('/login') }} className='hover:cursor-pointer'>Entrar</a>
+          <a>Carrinho</a>
+          <button className="h-fit">Procurar</button>
         </nav>
       </section>
       <nav className="mx-auto flex gap-2 pb-2 text-base font-semibold text-slate-100">
