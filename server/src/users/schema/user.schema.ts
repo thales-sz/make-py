@@ -25,13 +25,25 @@ export class User extends AbstractDocument {
     enum: ['ADMIN', 'USER'],
     default: 'USER',
   })
-  role: string;
+  role?: 'ADMIN' | 'USER';
 
   @Prop({ type: String, required: true })
   phoneNumber: string;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Order' }], required: false })
   order?: Order[];
+
+  constructor(user?: Partial<User>) {
+    super();
+    this._id = user?._id;
+    this.email = user?.email;
+    this.firstName = user?.firstName;
+    this.lastName = user?.lastName;
+    this.password = user?.password;
+    this.phoneNumber = user?.phoneNumber;
+    this.role = user?.role;
+    this.order = user?.order;
+  }
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
