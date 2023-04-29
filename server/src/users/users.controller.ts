@@ -23,7 +23,9 @@ export class UsersController {
   @Public()
   @Post('signup')
   async create(@Body() createUserDto: CreateUserDto) {
-    const user = await this.usersService.findOneByEmail(createUserDto.email);
+    const user = await this.usersService.findOne({
+      email: createUserDto.email,
+    });
 
     if (createUserDto.role)
       throw new UnauthorizedException('You cannot assign a role to a user');
@@ -41,7 +43,7 @@ export class UsersController {
 
   @Get('user/:id')
   async findOne(@Param('id') id: string) {
-    const user = await this.usersService.findOne(id);
+    const user = await this.usersService.findOne({ _id: id });
 
     if (!user) throw new NotFoundException(`User with id: '${id}' not found`);
 
@@ -50,7 +52,7 @@ export class UsersController {
 
   @Patch('user/:id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    const user = await this.usersService.findOne(id);
+    const user = await this.usersService.findOne({ _id: id });
 
     if (!user) throw new NotFoundException(`User with id: '${id}' not found`);
 
@@ -60,7 +62,7 @@ export class UsersController {
   @HttpCode(204)
   @Delete('user/:id')
   async remove(@Param('id') id: string) {
-    const user = await this.usersService.findOne(id);
+    const user = await this.usersService.findOne({ _id: id });
 
     if (!user) throw new NotFoundException(`User with id: '${id}' not found`);
 

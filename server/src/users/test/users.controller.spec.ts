@@ -4,7 +4,7 @@ import { UsersService } from '../users.service';
 import { User } from '../schema/user.schema';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { Types } from 'mongoose';
-import { NotFoundException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 
 const usersList: User[] = [
   new User({
@@ -54,7 +54,7 @@ describe('UsersController', () => {
           useValue: {
             create: jest.fn().mockResolvedValue(returnCreate),
             findAll: jest.fn().mockResolvedValue(usersList),
-            findOne: jest.fn().mockResolvedValue(usersList[0]),
+            findOne: jest.fn(),
             findOneByEmail: jest.fn(),
             update: jest.fn(),
             remove: jest.fn(),
@@ -85,6 +85,8 @@ describe('UsersController', () => {
 
   describe('Create method', () => {
     it('should create a new user when called with the right params', async () => {
+      jest.spyOn(usersController, 'findOne').mockResolvedValue(null);
+
       const result = await usersController.create(newUser);
 
       expect(result).toHaveProperty('_id');
@@ -95,10 +97,22 @@ describe('UsersController', () => {
         async () => await usersController.create(newUserWithRole),
       ).rejects.toThrowError();
     });
+
+    it('should throw when trying to create a user with a already used email', async () => {
+      jest
+        .spyOn(usersController, 'create')
+        .mockRejectedValue(new ConflictException());
+
+      await expect(
+        async () => await usersController.create(newUser),
+      ).rejects.toThrowError(new ConflictException());
+    });
   });
 
   describe('Find one method', () => {
     it('should return one unique user with the param id', async () => {
+      jest.spyOn(usersController, 'findOne').mockResolvedValue(usersList[0]);
+
       const result = await usersController.findOne('644d38a85e6a824c43911d78');
 
       expect(result).toBe(usersList[0]);
