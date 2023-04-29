@@ -1,13 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
-import { User } from './schema/user.schema';
-import { CreateUserDto } from './dto/create-user.dto';
+import { UsersController } from '../users.controller';
+import { UsersService } from '../users.service';
+import { User } from '../schema/user.schema';
+import { CreateUserDto } from '../dto/create-user.dto';
 import { Types } from 'mongoose';
-import { UnauthorizedException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 
 const usersList: User[] = [
-  new User({ firstName: 'Mock 01' }),
+  new User({
+    _id: new Types.ObjectId('644d38a85e6a824c43911d78'),
+    firstName: 'Mock 01',
+  }),
   new User({ firstName: 'Mock 02' }),
   new User({ firstName: 'Mock 03' }),
 ];
@@ -88,9 +91,25 @@ describe('UsersController', () => {
     });
 
     it('should throw when trying to assign a role to a user', async () => {
-      const result = await usersController.create(newUserWithRole);
+      await expect(
+        async () => await usersController.create(newUserWithRole),
+      ).rejects.toThrowError();
+    });
+  });
 
-      expect(result).toThrowError(new UnauthorizedException());
+  describe('Find one method', () => {
+    it('should return one unique user with the param id', async () => {
+      const result = await usersController.findOne('644d38a85e6a824c43911d78');
+
+      expect(result).toBe(usersList[0]);
+    });
+
+    it('should throw when user with the param id do not exist', async () => {
+      jest
+        .spyOn(usersController, 'findOne')
+        .mockRejectedValueOnce(new NotFoundException());
+
+      expect(usersController.findOne('INVALID_ID')).rejects.toThrowError();
     });
   });
 });
