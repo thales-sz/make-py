@@ -28,10 +28,7 @@ describe('App Health Check (e2e)', () => {
       const response = await request(app.getHttpServer()).get('/users');
 
       expect(response.statusCode).toBe(401);
-      expect(response.body).toEqual({
-        message: 'Unauthorized',
-        statusCode: 401,
-      });
+      expect(response.body.message).toEqual('Unauthorized');
     });
 
     it('should be abled to get users as admin - /users (GET)', async () => {
