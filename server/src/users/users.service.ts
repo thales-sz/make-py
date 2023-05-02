@@ -5,6 +5,7 @@ import { User } from './schema/user.schema';
 
 import * as bcrypt from 'bcrypt';
 import { UsersRepository } from './users.repository';
+import { FilterQuery } from 'mongoose';
 
 @Injectable()
 export class UsersService {
@@ -16,16 +17,12 @@ export class UsersService {
     return this.usersRepository.create({ ...createUserDto });
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<User[] | []> {
     return this.usersRepository.findAll({});
   }
 
-  async findOne(id: string): Promise<User> {
-    return this.usersRepository.findOne({ _id: id });
-  }
-
-  async findOneByEmail(email: string): Promise<User> {
-    return this.usersRepository.findOne({ email });
+  async findOne(filterQuery: FilterQuery<User>): Promise<User | null> {
+    return this.usersRepository.findOne(filterQuery);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {

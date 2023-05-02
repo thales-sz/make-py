@@ -5,17 +5,10 @@ import {
   IsPhoneNumber,
   IsString,
   MinLength,
-  IsMongoId,
   MaxLength,
 } from 'class-validator';
-import { Types } from 'mongoose';
 
 export class CreateUserDto {
-  @IsMongoId()
-  @IsString()
-  @IsOptional()
-  _id: Types.ObjectId;
-
   @IsString()
   @IsNotEmpty()
   firstName: string;
@@ -41,5 +34,5 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsString()
-  role: 'ADMIN' | 'USER';
+  role?: 'ADMIN' | 'USER';
 }
