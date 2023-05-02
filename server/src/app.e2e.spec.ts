@@ -4,6 +4,14 @@ import * as request from 'supertest';
 import { AppModule } from './app.module';
 import { JwtService } from '@nestjs/jwt';
 
+const userBody = {
+  firstName: 'User',
+  lastName: 'Example',
+  email: 'email@example.com',
+  password: 'mock123',
+  phoneNumber: '+5522689523457',
+};
+
 describe('App Health Check (e2e)', () => {
   let app: INestApplication;
 
@@ -43,6 +51,14 @@ describe('App Health Check (e2e)', () => {
         .set('Authorization', `Bearer ${adminToken}`);
 
       expect(response.statusCode).toBe(200);
+    });
+
+    it('should be abled to create a new user - /signup (POST)', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/signup')
+        .send(userBody);
+
+      expect(response.statusCode).toBe(201);
     });
   });
 });
