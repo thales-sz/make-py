@@ -1,4 +1,4 @@
-import { Prop } from '@nestjs/mongoose';
+import { Prop, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument } from 'src/database/abstract.schema';
 
 export class Product extends AbstractDocument {
@@ -13,4 +13,9 @@ export class Product extends AbstractDocument {
 
   @Prop({ type: String, required: true })
   description: string;
+
+  @Prop({ type: Date, required: false, default: new Date() })
+  createdAt?: Date;
 }
+
+export const ProductSchema = SchemaFactory.createForClass(Product);

@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import ProductsRepository from './products.repository';
+import { Product } from './schema/product.schema';
+import { FilterQuery } from 'mongoose';
 
 @Injectable()
 export class ProductsService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  constructor(private productsRepository: ProductsRepository) {}
+  async create(createProductDto: CreateProductDto): Promise<Product> {
+    return this.productsRepository.create(createProductDto);
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll(filterQuery: FilterQuery<Product>): Promise<Product[]> {
+    return this.productsRepository.findAll(filterQuery);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(filterQuery: FilterQuery<Product>): Promise<Product | null> {
+    return this.productsRepository.findOne(filterQuery);
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product | null> {
+    return this.productsRepository.findOneAndUpdate(
+      { _id: id },
+      updateProductDto,
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string): Promise<void> {
+    await this.productsRepository.delete({ _id: id });
   }
 }
