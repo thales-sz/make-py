@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function Header (): JSX.Element {
+function Header(): JSX.Element {
   const [headerBlack, setHeaderBlack] = useState<boolean>(false)
   const navigate = useNavigate()
 
@@ -16,9 +16,7 @@ function Header (): JSX.Element {
   return (
     <header
       className={`${
-        !headerBlack
-          ? 'bg-transparent'
-          : 'bg-slate-900'
+        !headerBlack ? 'bg-transparent' : 'bg-slate-900'
       } fixed z-10 flex max-h-40 w-full flex-col bg-gradient-to-b from-black to-transparent font-bold text-slate-100 hover:bg-slate-900`}
     >
       <section className="mt-3 flex justify-between font-semibold">
@@ -31,7 +29,14 @@ function Header (): JSX.Element {
         </h1>
 
         <nav className="mr-3 mt-7 flex justify-center gap-2 text-center max-sm:text-sm md:w-44">
-          <a onClick={() => { navigate('/login') }} className='hover:cursor-pointer'>Entrar</a>
+          <a
+            onClick={() => {
+              navigate('/login')
+            }}
+            className="hover:cursor-pointer"
+          >
+            Entrar
+          </a>
           <a>Carrinho</a>
           <button className="h-fit">Procurar</button>
         </nav>

@@ -8,8 +8,8 @@ function PageNotFound (): JSX.Element {
     <div>
       <Header />
       <Slider />
-      <div className='text-center p-10 text-6xl font-ace-sc uppercase'>
-        <div className='mb-8'>404</div>
+      <div className="p-10 text-center font-ace-sc text-6xl uppercase">
+        <div className="mb-8">404</div>
         <h1>Página não encontrada!</h1>
       </div>
       <Footer />
