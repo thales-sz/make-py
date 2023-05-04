@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SignIn ({ register }: any): JSX.Element {
+function SignIn (): JSX.Element {
   return (
     <form className="space-y-4 md:space-y-6" action="#">
       <div>

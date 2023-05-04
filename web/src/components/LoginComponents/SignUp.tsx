@@ -3,8 +3,11 @@ import { insertMaskInPhone } from '../../common/helper/phoneMask'
 import type { IFormSignUp } from '../../interfaces/form.interface'
 import { formSignUpSchema } from '../../common/schema/form.schema'
 import ApiUserQueries from '../../api/formQuery'
+import { type AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function SignUp (): JSX.Element {
+  const navigate = useNavigate()
   const [form, setForm] = useState<IFormSignUp>({
     firstName: '',
     lastName: '',
@@ -13,7 +16,7 @@ function SignUp (): JSX.Element {
     password: ''
   })
 
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4MzIzODIyMCwiZXhwIjoxNjgzMjgxNDIwfQ._gxonopJABGl03GEgH-3mBIZjjdRkT7awoMcRNS6w_c'
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4MzI0MDUwNSwiZXhwIjoxNjgzMjgzNzA1fQ.yjrG_wxjefZrJT3CoQCCAFZ1ehqtaeaVCtU825mVJfM'
 
   const apiQueries = new ApiUserQueries('http://localhost:3000', token)
 
@@ -29,6 +32,9 @@ function SignUp (): JSX.Element {
     try {
       const validBody = formSignUpSchema.parse(form)
       await apiQueries.createUser(validBody)
+      const loginResponse: AxiosResponse = await apiQueries.singIn(validBody)
+      localStorage.setItem('token', loginResponse.data.token)
+      navigate('/')
     } catch (error) {
       console.log(error)
     }

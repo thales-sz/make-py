@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance } from 'axios'
+import axios, { type AxiosResponse, type AxiosInstance } from 'axios'
 import type { IFormSignUp, IUser } from '../interfaces/form.interface'
 
 export default class ApiUserQueries {
@@ -20,7 +20,11 @@ export default class ApiUserQueries {
     return await this.api.get('users', this.config)
   }
 
-  async createUser (body: IFormSignUp): Promise<IUser> {
-    return await this.api.post('signup', body)
+  async createUser (userCredentials: IFormSignUp): Promise<IUser> {
+    return await this.api.post('users/signup', userCredentials)
+  }
+
+  async singIn (userCredentials: IFormSignUp): Promise<AxiosResponse> {
+    return await this.api.post('auth/signin', { email: userCredentials.email, password: userCredentials.password })
   }
 }
