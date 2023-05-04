@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { insertMaskInPhone } from '../../common/helper/phoneMask'
 import type { IFormSignUp } from '../../interfaces/form.interface'
 import { formSignUpSchema } from '../../common/schema/form.schema'
+import ApiUserQueries from '../../api/formQuery'
 
 function SignUp (): JSX.Element {
   const [form, setForm] = useState<IFormSignUp>({
@@ -12,6 +13,10 @@ function SignUp (): JSX.Element {
     password: ''
   })
 
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4MzIzODIyMCwiZXhwIjoxNjgzMjgxNDIwfQ._gxonopJABGl03GEgH-3mBIZjjdRkT7awoMcRNS6w_c'
+
+  const apiQueries = new ApiUserQueries('http://localhost:3000', token)
+
   function handleInputChange ({ target }: React.ChangeEvent<HTMLInputElement>): void {
     setForm({
       ...form,
@@ -19,17 +24,18 @@ function SignUp (): JSX.Element {
     })
   }
 
-  function handleSubmit (e: React.FormEvent<HTMLFormElement>): void {
+  async function handleSubmit (e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault()
     try {
-      const data = formSignUpSchema.parse(form)
-      console.log(data)
+      const validBody = formSignUpSchema.parse(form)
+      await apiQueries.createUser(validBody)
     } catch (error) {
       console.log(error)
     }
   }
 
   return (
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
       <div>
         <label
