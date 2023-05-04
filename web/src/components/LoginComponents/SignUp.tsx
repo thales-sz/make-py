@@ -9,8 +9,7 @@ function SignUp (): JSX.Element {
     lastName: '',
     email: '',
     phoneNumber: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
   })
 
   function handleInputChange ({ target }: React.ChangeEvent<HTMLInputElement>): void {
@@ -22,8 +21,11 @@ function SignUp (): JSX.Element {
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
-    const data = formSignUpSchema.parse(form)
-    console.log(data)
+    try {
+      formSignUpSchema.parse(form)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -116,24 +118,6 @@ function SignUp (): JSX.Element {
           className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
           required
           value={form.password}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="confirm-password"
-          className="mb-2 block text-sm font-medium text-gray-900"
-        >
-          Confirmar senha
-        </label>
-        <input
-          onChange={handleInputChange}
-          type="password"
-          name="confirmPassword"
-          id="confirm-password"
-          placeholder="••••••••"
-          className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
-          required
-          value={form.confirmPassword}
         />
       </div>
       <button
