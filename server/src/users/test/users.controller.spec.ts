@@ -15,7 +15,7 @@ const usersList: User[] = [
   new User({ firstName: 'Mock 03' }),
 ];
 
-const newUser: CreateUserDto = {
+const createUser: CreateUserDto = {
   firstName: 'New',
   lastName: 'User',
   email: 'user@example.com',
@@ -23,22 +23,23 @@ const newUser: CreateUserDto = {
   phoneNumber: '12345678',
 };
 
-const newUserWithRole: CreateUserDto = {
+const createUserWithRole: CreateUserDto = {
   firstName: 'New',
   lastName: 'User',
   email: 'user@example.com',
   password: 'password',
   phoneNumber: '12345678',
-  role: 'ADMIN',
+  role: 'USER',
 };
 
-const returnCreate: User = {
+const returnedUser: User = {
   _id: new Types.ObjectId(),
   firstName: 'New',
   lastName: 'User',
   email: 'user@example.com',
   password: 'password',
   phoneNumber: '12345678',
+  role: 'USER',
 };
 
 describe('UsersController', () => {
@@ -52,8 +53,8 @@ describe('UsersController', () => {
         {
           provide: UsersService,
           useValue: {
-            create: jest.fn().mockResolvedValue(returnCreate),
-            findAll: jest.fn().mockResolvedValue(usersList),
+            create: jest.fn(),
+            findAll: jest.fn(),
             findOne: jest.fn(),
             findOneByEmail: jest.fn(),
             update: jest.fn(),
@@ -77,6 +78,8 @@ describe('UsersController', () => {
 
   describe('Find all method', () => {
     it('should return a list of users', async () => {
+      jest.spyOn(usersService, 'findAll').mockResolvedValue(usersList);
+
       const result = await usersController.findAll();
 
       expect(result).toBe(usersList);
@@ -85,33 +88,34 @@ describe('UsersController', () => {
 
   describe('Create method', () => {
     it('should create a new user when called with the right params', async () => {
-      jest.spyOn(usersController, 'findOne').mockResolvedValue(null);
+      jest.spyOn(usersService, 'findOne').mockResolvedValue(null);
+      jest.spyOn(usersService, 'create').mockResolvedValue(returnedUser);
 
-      const result = await usersController.create(newUser);
+      const result = await usersController.create(createUser);
 
       expect(result).toHaveProperty('_id');
     });
 
     it('should throw when trying to assign a role to a user', async () => {
       await expect(
-        async () => await usersController.create(newUserWithRole),
+        async () => await usersController.create(createUserWithRole),
       ).rejects.toThrowError();
     });
 
     it('should throw when trying to create a user with a already used email', async () => {
-      jest
-        .spyOn(usersController, 'create')
-        .mockRejectedValue(new ConflictException());
+      jest.spyOn(usersService, 'findOne').mockResolvedValue(returnedUser);
 
       await expect(
-        async () => await usersController.create(newUser),
-      ).rejects.toThrowError(new ConflictException());
+        async () => await usersController.create(createUser),
+      ).rejects.toThrowError(
+        new ConflictException('This email is already in use'),
+      );
     });
   });
 
   describe('Find one method', () => {
     it('should return one unique user with the param id', async () => {
-      jest.spyOn(usersController, 'findOne').mockResolvedValue(usersList[0]);
+      jest.spyOn(usersService, 'findOne').mockResolvedValue(usersList[0]);
 
       const result = await usersController.findOne('644d38a85e6a824c43911d78');
 
@@ -120,7 +124,7 @@ describe('UsersController', () => {
 
     it('should throw when user with the param id do not exist', async () => {
       jest
-        .spyOn(usersController, 'findOne')
+        .spyOn(usersService, 'findOne')
         .mockRejectedValueOnce(new NotFoundException());
 
       expect(usersController.findOne('INVALID_ID')).rejects.toThrowError();

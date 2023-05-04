@@ -16,7 +16,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Admin, Public } from 'src/common/metadata';
 
-@Controller()
+@Controller('/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -36,12 +36,12 @@ export class UsersController {
   }
 
   @Admin()
-  @Get('users')
+  @Get()
   async findAll() {
-    return this.usersService.findAll();
+    return this.usersService.findAll({});
   }
 
-  @Get('user/:id')
+  @Get(':id')
   async findOne(@Param('id') id: string) {
     const user = await this.usersService.findOne({ _id: id });
 
@@ -50,7 +50,7 @@ export class UsersController {
     return user;
   }
 
-  @Patch('user/:id')
+  @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     const user = await this.usersService.findOne({ _id: id });
 
@@ -60,7 +60,7 @@ export class UsersController {
   }
 
   @HttpCode(204)
-  @Delete('user/:id')
+  @Delete(':id')
   async remove(@Param('id') id: string) {
     const user = await this.usersService.findOne({ _id: id });
 
