@@ -22,7 +22,8 @@ function SignUp (): JSX.Element {
   function handleSubmit (e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
     try {
-      formSignUpSchema.parse(form)
+      const data = formSignUpSchema.parse(form)
+      console.log(data)
     } catch (error) {
       console.log(error)
     }
