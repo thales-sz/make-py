@@ -27,4 +27,13 @@ export class AuthController {
 
     return { token };
   }
+
+  // @Public()
+  // @HttpCode(HttpStatus.OK)
+  // @Post('token')
+  // async validateToken(@Body() token: IToken): Promise<void> {
+  //   const response = await this.authService.validateToken(token);
+
+  //   if (!response) null;
+  // }
 }
