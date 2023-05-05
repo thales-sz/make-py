@@ -1,19 +1,24 @@
-import axios, { type AxiosResponse, type AxiosInstance } from 'axios'
+import axios, { type AxiosResponse, type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import type { IFormSignUp, IUser } from '../interfaces/form.interface'
 
 export default class ApiUserQueries {
   private readonly api: AxiosInstance
-  private readonly config
+  private readonly config: AxiosRequestConfig
+  private token: string = ''
 
-  constructor (baseUrl: string, token: string) {
+  constructor (baseUrl: string) {
     this.api = axios.create({
       baseURL: baseUrl
     })
     this.config = {
       headers: {
-        Authorization: 'Bearer ' + token
+        Authorization: 'Bearer ' + this.token
       }
     }
+  }
+
+  async setToken (token: string): Promise<void> {
+    this.token = token
   }
 
   async getUser (): Promise<IUser[]> {

@@ -4,8 +4,6 @@ import { compareSync } from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { User } from 'src/users/schema/user.schema';
 
-import 'dotenv/config';
-
 @Injectable()
 export class AuthService {
   constructor(
