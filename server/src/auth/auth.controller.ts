@@ -8,8 +8,9 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from 'src/common/metadata';
-import { SignInDto } from './dto/auth.dto';
+import { SignInDto, TokenDto } from './dto/auth.dto';
 import { IToken } from './interfaces/token.interface';
+import { UnprocessableEntityException } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
@@ -28,12 +29,14 @@ export class AuthController {
     return { token };
   }
 
-  // @Public()
-  // @HttpCode(HttpStatus.OK)
-  // @Post('token')
-  // async validateToken(@Body() token: IToken): Promise<void> {
-  //   const response = await this.authService.validateToken(token);
-
-  //   if (!response) null;
-  // }
+  @Public()
+  @HttpCode(HttpStatus.ACCEPTED)
+  @Post('token')
+  async validateToken(@Body() token: TokenDto): Promise<void> {
+    try {
+      await this.authService.validateToken(token);
+    } catch (error) {
+      throw new UnprocessableEntityException('Invalid token');
+    }
+  }
 }
