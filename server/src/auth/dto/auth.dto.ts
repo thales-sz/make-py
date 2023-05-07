@@ -1,5 +1,6 @@
 import {
   IsEmail,
+  IsJWT,
   IsNotEmpty,
   IsString,
   MaxLength,
@@ -16,4 +17,10 @@ export class SignInDto {
   @MinLength(6)
   @MaxLength(16)
   password: string;
+}
+
+export class TokenDto {
+  @IsNotEmpty()
+  @IsJWT()
+  token: string;
 }

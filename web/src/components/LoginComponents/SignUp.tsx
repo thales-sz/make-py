@@ -16,9 +16,7 @@ function SignUp (): JSX.Element {
     password: ''
   })
 
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY4MzI0MDUwNSwiZXhwIjoxNjgzMjgzNzA1fQ.yjrG_wxjefZrJT3CoQCCAFZ1ehqtaeaVCtU825mVJfM'
-
-  const apiQueries = new ApiUserQueries('http://localhost:3000', token)
+  const apiQueries = new ApiUserQueries('http://localhost:3000')
 
   function handleInputChange ({ target }: React.ChangeEvent<HTMLInputElement>): void {
     setForm({
