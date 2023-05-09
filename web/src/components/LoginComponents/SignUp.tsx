@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { insertMaskInPhone } from '../../common/helper/phoneMask'
 import type { IFormSignUp } from '../../interfaces/form.interface'
-import { formSignUpSchema } from '../../common/schema/form.schema'
-import ApiUserQueries from '../../api/formQuery'
-import { type AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 function SignUp (): JSX.Element {
@@ -16,8 +13,6 @@ function SignUp (): JSX.Element {
     password: ''
   })
 
-  const apiQueries = new ApiUserQueries('http://localhost:3000')
-
   function handleInputChange ({ target }: React.ChangeEvent<HTMLInputElement>): void {
     setForm({
       ...form,
@@ -25,13 +20,9 @@ function SignUp (): JSX.Element {
     })
   }
 
-  async function handleSubmit (e: React.FormEvent<HTMLFormElement>): Promise<void> {
+  function handleSubmit (e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
     try {
-      const validBody = formSignUpSchema.parse(form)
-      await apiQueries.createUser(validBody)
-      const loginResponse: AxiosResponse = await apiQueries.singIn(validBody)
-      localStorage.setItem('token', loginResponse.data.token)
       navigate('/')
     } catch (error) {
       console.log(error)
@@ -39,7 +30,6 @@ function SignUp (): JSX.Element {
   }
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
       <div>
         <label
