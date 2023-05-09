@@ -28,8 +28,13 @@ function Slider (): JSX.Element {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      nextSlide()
-    }, 2000)
+      setCurrentIndex(prev => {
+        if (prev + 1 >= slides.length) {
+          return 0
+        }
+        return prev + 1
+      })
+    }, 1000 * 7) // 7 segs
 
     return () => {
       clearInterval(interval)
