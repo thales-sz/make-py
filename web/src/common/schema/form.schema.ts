@@ -15,3 +15,9 @@ export const formSignUpSchema = z.object({
   password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres').max(16).nonempty(),
   phoneNumber: z.string().nonempty()
 })
+
+export const formSignInSchema = z.object({
+  email: z.string().nonempty().email('Formato de e-mail inválido').regex(emailRegex),
+  password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres').max(16).nonempty(),
+  remember: z.boolean()
+})

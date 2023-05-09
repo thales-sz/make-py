@@ -9,7 +9,7 @@ export interface IFormSignUp {
 export interface IFormSignIn {
   email: string
   password: string
-  checkbox: boolean
+  remember: boolean
 }
 
 export interface IUser {

@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import { insertMaskInPhone } from '../../common/helper/phoneMask'
 import type { IFormSignUp } from '../../interfaces/form.interface'
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from 'react-query'
+import axios from 'axios'
+import { formSignUpSchema } from '../../common/schema/form.schema'
+import { CgDanger } from 'react-icons/cg'
 
 function SignUp (): JSX.Element {
   const navigate = useNavigate()
@@ -20,9 +24,18 @@ function SignUp (): JSX.Element {
     })
   }
 
-  function handleSubmit (e: React.FormEvent<HTMLFormElement>): void {
+  const { mutateAsync, isError } = useMutation({
+    mutationFn: async (user: IFormSignUp) => {
+      return await axios.post('http://localhost:3000/users/signup', user)
+    }
+  })
+
+  async function handleSubmit (e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault()
     try {
+      const validForm = formSignUpSchema.parse(form)
+      const { data } = await mutateAsync(validForm)
+      if (!isError) localStorage.setItem('user', data.token)
       navigate('/')
     } catch (error) {
       console.log(error)
@@ -127,6 +140,12 @@ function SignUp (): JSX.Element {
       >
         Cadastrar
       </button>
+      {isError
+        ? <div className='flex text-red-500 gap-2'>
+          <CgDanger width={10} color='red'/>
+        Ocorreu um erro!
+        </div>
+        : null}
     </form>
   )
 }
