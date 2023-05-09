@@ -5,12 +5,14 @@ import {
   UnauthorizedException,
   HttpCode,
   HttpStatus,
+  Get,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from 'src/common/metadata';
-import { SignInDto, TokenDto } from './dto/auth.dto';
-import { IToken } from './interfaces/token.interface';
+import { SignInDto } from './dto/auth.dto';
 import { UnprocessableEntityException } from '@nestjs/common';
+import { Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -19,7 +21,7 @@ export class AuthController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('signin')
-  async signIn(@Body() { email, password }: SignInDto): Promise<IToken> {
+  async signIn(@Body() { email, password }: SignInDto) {
     const user = await this.authService.validateUser(email, password);
 
     if (!user) throw new UnauthorizedException('Invalid credentials');
@@ -29,12 +31,11 @@ export class AuthController {
     return { token };
   }
 
-  @Public()
   @HttpCode(HttpStatus.ACCEPTED)
-  @Post('token')
-  async validateToken(@Body() token: TokenDto): Promise<void> {
+  @Get('token')
+  async validateToken(@Req() req: Request) {
     try {
-      await this.authService.validateToken(token);
+      await this.authService.validateToken(req);
     } catch (error) {
       throw new UnprocessableEntityException('Invalid token');
     }
