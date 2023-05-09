@@ -20,15 +20,13 @@ export class AuthService {
     return null;
   }
 
-
   async signIn(user: User): Promise<string> {
-
     const payload = { email: user.email, role: user.role, _id: user._id };
 
     return this.jwtService.signAsync(payload);
   }
 
-  async validateToken(token: IToken) {
+  async validateToken(token: IToken): Promise<object> {
     return this.jwtService.verifyAsync(token.token);
   }
 }
