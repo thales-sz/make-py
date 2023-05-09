@@ -155,7 +155,7 @@ function SignUp (): JSX.Element {
       >
         Cadastrar
       </button>
-      {isError
+      {singUp.isError || singIn.isError
         ? <div className='flex text-red-500 gap-2'>
           <CgDanger width={10} color='red'/>
         {errorMessage}

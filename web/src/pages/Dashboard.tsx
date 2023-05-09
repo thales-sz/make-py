@@ -8,9 +8,10 @@ import Loading from '../components/Loading'
 
 function Dashboard (): JSX.Element {
   const navigate = useNavigate()
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('user')
 
   if (token === null) navigate('/login')
+
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`
@@ -20,7 +21,9 @@ function Dashboard (): JSX.Element {
     queryFn: async () => {
       const { data } = await axios.get('http://localhost:3000/orders', { headers })
       return data
-    }
+    },
+    retry: 1,
+    refetchOnWindowFocus: false
   })
 
   return (
@@ -29,7 +32,11 @@ function Dashboard (): JSX.Element {
       {isError
         ? <Unathorized />
         : (
-            isLoading ? <Loading /> : <div>main content {data}</div>
+            isLoading
+              ? <Loading absolute={true}/>
+              : <h1 className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2'>
+                Conteúdo do Dashboard {data}
+                </h1>
           )}
     </div>
   )

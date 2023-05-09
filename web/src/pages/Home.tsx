@@ -27,7 +27,7 @@ function Home (): JSX.Element {
       </h2>
       <section className="mx-auto flex max-w-7xl flex-wrap justify-center gap-5">
         {isFetching
-          ? <Loading />
+          ? <Loading absolute={false}/>
           : data?.map((product) => {
             return <ProductCard key={product?._id} {...product} />
           })}
