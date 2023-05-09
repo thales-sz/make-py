@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { compareSync } from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { User } from 'src/users/schema/user.schema';
-import { IToken } from './interfaces/token.interface';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -20,15 +20,22 @@ export class AuthService {
     return null;
   }
 
-
-  async signIn(user: User): Promise<string> {
-
+  async signIn(user: User, remember: boolean): Promise<string> {
     const payload = { email: user.email, role: user.role, _id: user._id };
 
-    return this.jwtService.signAsync(payload);
+    return this.jwtService.signAsync(
+      payload,
+      remember ? { expiresIn: '7d' } : { expiresIn: '2h' },
+    );
   }
 
-  async validateToken(token: IToken) {
-    return this.jwtService.verifyAsync(token.token);
+  async validateToken(req: Request): Promise<object> {
+    const token = this.extractTokenFromHeader(req);
+    return this.jwtService.verifyAsync(token);
+  }
+
+  private extractTokenFromHeader(request: Request): string | undefined {
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 }

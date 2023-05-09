@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-function Header(): JSX.Element {
+function Header (): JSX.Element {
   const [headerBlack, setHeaderBlack] = useState<boolean>(false)
-  const navigate = useNavigate()
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 200) {
@@ -24,21 +23,17 @@ function Header(): JSX.Element {
           <span>by Pyetra Almeida</span>
         </nav>
 
-        <h1 className="mt-7 h-fit pb-2 font-ace-sc tracking-widest max-sm:text-2xl md:text-4xl">
+        <Link to="/" className="mt-7 h-fit pb-2 font-ace-sc tracking-widest max-sm:text-2xl md:text-4xl">
           MAKEPY
-        </h1>
+        </Link>
 
-        <nav className="mr-3 mt-7 flex justify-center gap-2 text-center max-sm:text-sm md:w-44">
-          <a
-            onClick={() => {
-              navigate('/login')
-            }}
-            className="hover:cursor-pointer"
-          >
+        <nav className="mr-3 mt-7 flex justify-center gap-4 text-center max-sm:text-base md:w-44">
+          <Link to="/login">
             Entrar
-          </a>
-          <a>Carrinho</a>
-          <button className="h-fit">Procurar</button>
+          </Link>
+          <Link to="/cart">
+            Carrinho
+            </Link>
         </nav>
       </section>
       <nav className="mx-auto flex gap-2 pb-2 text-base font-semibold text-slate-100">

@@ -10,7 +10,7 @@ import {
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { Public } from 'src/common/metadata';
+import { Admin } from 'src/common/metadata';
 
 @Controller('orders')
 export class OrdersController {
@@ -21,7 +21,7 @@ export class OrdersController {
     return this.ordersService.create(createOrderDto);
   }
 
-  @Public()
+  @Admin()
   @Get()
   findAll() {
     return this.ordersService.findAll();

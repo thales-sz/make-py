@@ -13,6 +13,8 @@
   },
   "plugins": ["react"],
   "rules": {
-    "react/self-closing-comp": ["error", { "component": true, "html": true }]
+    "react/self-closing-comp": ["error", { "component": true, "html": true }],
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/no-misused-promises": "off"
   }
 }

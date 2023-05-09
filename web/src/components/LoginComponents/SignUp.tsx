@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { insertMaskInPhone } from '../../common/helper/phoneMask'
-import type { IFormSignUp } from '../../interfaces/form.interface'
-import { formSignUpSchema } from '../../common/schema/form.schema'
-import ApiUserQueries from '../../api/formQuery'
-import { type AxiosResponse } from 'axios'
+import type { IFormSignIn, IFormSignUp, IUser } from '../../interfaces/form.interface'
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from 'react-query'
+import axios from 'axios'
+import { formSignUpSchema } from '../../common/schema/form.schema'
+import { CgDanger } from 'react-icons/cg'
 
 function SignUp (): JSX.Element {
+  const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
+
   const [form, setForm] = useState<IFormSignUp>({
     firstName: '',
     lastName: '',
@@ -16,8 +19,6 @@ function SignUp (): JSX.Element {
     password: ''
   })
 
-  const apiQueries = new ApiUserQueries('http://localhost:3000')
-
   function handleInputChange ({ target }: React.ChangeEvent<HTMLInputElement>): void {
     setForm({
       ...form,
@@ -25,21 +26,37 @@ function SignUp (): JSX.Element {
     })
   }
 
+  const singUp = useMutation({
+    mutationFn: async (user: IFormSignUp): Promise<IUser> => {
+      const { data } = await axios.post('http://localhost:3000/users/signup', user)
+      return data as IUser
+    },
+    onError: async (error: any) => {
+      if (error.request.status === 409) setErrorMessage('Este email já está em uso')
+    }
+  })
+
+  const singIn = useMutation({
+    mutationFn: async (user: IFormSignIn) => {
+      return await axios.post('http://localhost:3000/auth/signin', user)
+    }
+  })
+
   async function handleSubmit (e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault()
     try {
-      const validBody = formSignUpSchema.parse(form)
-      await apiQueries.createUser(validBody)
-      const loginResponse: AxiosResponse = await apiQueries.singIn(validBody)
-      localStorage.setItem('token', loginResponse.data.token)
+      formSignUpSchema.parse(form)
+    } catch (error: any) {
+      setErrorMessage(JSON.parse(error.message)[0].message)
+    } finally {
+      await singUp.mutateAsync(form)
+      const { data } = await singIn.mutateAsync({ email: form.email, password: form.password, remember: false })
+      if (!singUp.isError) localStorage.setItem('user', data.token)
       navigate('/')
-    } catch (error) {
-      console.log(error)
     }
   }
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
       <div>
         <label
@@ -92,6 +109,7 @@ function SignUp (): JSX.Element {
           className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
           placeholder="DDD + Telefone"
           required
+          maxLength={15}
           value={insertMaskInPhone(form.phoneNumber)}
         />
       </div>
@@ -137,6 +155,12 @@ function SignUp (): JSX.Element {
       >
         Cadastrar
       </button>
+      {singUp.isError || singIn.isError
+        ? <div className='flex text-red-500 gap-2'>
+          <CgDanger width={10} color='red'/>
+        {errorMessage}
+        </div>
+        : null}
     </form>
   )
 }

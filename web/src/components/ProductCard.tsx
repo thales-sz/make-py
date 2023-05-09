@@ -1,13 +1,13 @@
 import React from 'react'
 
 interface ProductCardProps {
-  id: number
+  _id?: string
   name: string
   description: string
   price: number
 }
 
-function ProductCard(props: ProductCardProps): JSX.Element {
+function ProductCard (props: ProductCardProps): JSX.Element {
   return (
     <div className="flex max-h-[430px] w-1/3 min-w-[290px] max-w-[290px] flex-col justify-center rounded-lg bg-gradient-to-b from-slate-900 to-slate-100 p-2">
       <img

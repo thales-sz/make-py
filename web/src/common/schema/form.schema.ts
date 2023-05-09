@@ -3,7 +3,7 @@ import z from 'zod'
 const emailRegex: RegExp = /^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+?$/i
 
 export const formSignUpSchema = z.object({
-  firstName: z.string().nonempty().transform(firstName => {
+  firstName: z.string().nonempty().min(2).transform(firstName => {
     return firstName[0].toUpperCase().concat(firstName.substring(1))
   }),
   lastName: z.string().nonempty().transform(lastName => {
@@ -12,6 +12,12 @@ export const formSignUpSchema = z.object({
     }).join(' ')
   }),
   email: z.string().nonempty().email('Formato de e-mail inválido').regex(emailRegex),
-  password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres').max(16).nonempty(),
+  password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres').max(16, 'A senha deve ter no máximo 16 caracteres').nonempty(),
   phoneNumber: z.string().nonempty()
+})
+
+export const formSignInSchema = z.object({
+  email: z.string().nonempty().email('Formato de e-mail inválido').regex(emailRegex),
+  password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres').max(16, 'A senha deve ter no máximo 16 caracteres').nonempty(),
+  remember: z.boolean()
 })
