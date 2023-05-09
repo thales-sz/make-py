@@ -21,12 +21,12 @@ export class AuthController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('signin')
-  async signIn(@Body() { email, password }: SignInDto) {
+  async signIn(@Body() { email, password, remember }: SignInDto) {
     const user = await this.authService.validateUser(email, password);
 
     if (!user) throw new UnauthorizedException('Invalid credentials');
 
-    const token = await this.authService.signIn(user);
+    const token = await this.authService.signIn(user, remember);
 
     return { token };
   }

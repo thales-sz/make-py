@@ -20,10 +20,13 @@ export class AuthService {
     return null;
   }
 
-  async signIn(user: User): Promise<string> {
+  async signIn(user: User, remember: boolean): Promise<string> {
     const payload = { email: user.email, role: user.role, _id: user._id };
 
-    return this.jwtService.signAsync(payload);
+    return this.jwtService.signAsync(
+      payload,
+      remember ? { expiresIn: '7d' } : { expiresIn: '2h' },
+    );
   }
 
   async validateToken(req: Request): Promise<object> {

@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsEmail,
   IsJWT,
   IsNotEmpty,
@@ -17,6 +18,10 @@ export class SignInDto {
   @MinLength(6)
   @MaxLength(16)
   password: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  remember: boolean;
 }
 
 export class TokenDto {
