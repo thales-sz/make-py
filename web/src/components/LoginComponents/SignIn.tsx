@@ -1,8 +1,11 @@
 import React from 'react'
 
 function SignIn (): JSX.Element {
+  function handleSubmit (e: React.FormEvent<HTMLFormElement>): void {
+
+  }
   return (
-    <form className="space-y-4 md:space-y-6" action="#">
+    <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
       <div>
         <label
           htmlFor="email"

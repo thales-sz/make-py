@@ -64,7 +64,7 @@ function Slider (): JSX.Element {
       <div className="absolute top-[50%] right-5 hidden -translate-x-0 translate-y-[-50%] cursor-pointer rounded-full bg-black/20 p-2 text-2xl text-white group-hover:block">
         <BsChevronCompactRight onClick={nextSlide} size={30} />
       </div>
-      <div className="absolute top-[95%] right-[35%] m-auto flex justify-center rounded-full bg-black/20">
+      <div className="absolute -translate-x-1/2 -translate-y-1/2 top-[95%] left-1/2 m-auto flex justify-center rounded-full bg-black/20">
         {slides.map((slide, slideIndex) => (
           <div
             key={slideIndex}

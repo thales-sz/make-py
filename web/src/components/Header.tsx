@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function Header(): JSX.Element {
+function Header (): JSX.Element {
   const [headerBlack, setHeaderBlack] = useState<boolean>(false)
   const navigate = useNavigate()
 
