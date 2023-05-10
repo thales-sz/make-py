@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import Unathorized from '../components/Unathorized'
 import Loading from '../components/Loading'
 import Dashboard from '../components/Dashboard/Dashboard'
+import Footer from '../components/Footer'
 
 function DashboardPage (): JSX.Element {
   const navigate = useNavigate()
@@ -28,11 +29,12 @@ function DashboardPage (): JSX.Element {
   })
 
   return (
-    <div className='h-screen'>
+    <div className='h-full'>
       <Header />
       {isError
         ? <Unathorized />
         : (isLoading ? <Loading absolute={true}/> : <Dashboard />)}
+      <Footer />
     </div>
   )
 }

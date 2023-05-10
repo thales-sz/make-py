@@ -11,7 +11,7 @@ interface InfoCardProps {
 
 function InfoCard ({ title, value, growthRate, relation, isCurrency }: InfoCardProps): JSX.Element {
   return (
-    <div className='flex flex-col bg-slate-50 max-w-xs rounded-md items-left p-3 w-full shadow-lg'>
+    <div className='flex flex-col bg-slate-50 max-w-xs rounded-md items-left p-3 w-full shadow-lg border border-slate-300'>
       <h1 className='text-lg font-semibold'>{title}</h1>
       <p className='text-3xl font-bold self-center my-1'>{
         isCurrency ? value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : value

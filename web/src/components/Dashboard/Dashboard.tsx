@@ -1,5 +1,7 @@
 import React from 'react'
 import InfoCard from './InfoCard'
+import Graph from './Graph'
+import OrdersList from './OrderList'
 
 function Dashboard (): JSX.Element {
   const data = {
@@ -35,11 +37,13 @@ function Dashboard (): JSX.Element {
   }
 
   return (
-    <div className='flex gap-3 mt-40 mx-auto w-3/4 flex-wrap justify-center'>
+    <div className='flex gap-3 mt-40 mb-7 mx-auto w-3/4 flex-wrap justify-center'>
       <InfoCard {...data}/>
       <InfoCard {...data1}/>
       <InfoCard {...data2}/>
       <InfoCard {...data3}/>
+      <Graph />
+      <OrdersList />
     </div>
   )
 }
