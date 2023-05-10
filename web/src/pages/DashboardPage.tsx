@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Unathorized from '../components/Unathorized'
 import Loading from '../components/Loading'
+import Dashboard from '../components/Dashboard/Dashboard'
 
-function Dashboard (): JSX.Element {
+function DashboardPage (): JSX.Element {
   const navigate = useNavigate()
   const token = localStorage.getItem('user')
 
@@ -17,12 +18,12 @@ function Dashboard (): JSX.Element {
     Authorization: `Bearer ${token}`
   }
 
-  const { data, isLoading, isError } = useQuery({
+  const { isLoading, isError } = useQuery({
     queryFn: async () => {
       const { data } = await axios.get('http://localhost:3000/orders', { headers })
       return data
     },
-    retry: 1,
+    retry: 0,
     refetchOnWindowFocus: false
   })
 
@@ -31,15 +32,9 @@ function Dashboard (): JSX.Element {
       <Header />
       {isError
         ? <Unathorized />
-        : (
-            isLoading
-              ? <Loading absolute={true}/>
-              : <h1 className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2'>
-                Conteúdo do Dashboard {data}
-                </h1>
-          )}
+        : (isLoading ? <Loading absolute={true}/> : <Dashboard />)}
     </div>
   )
 }
 
-export default Dashboard
+export default DashboardPage
