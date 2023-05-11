@@ -6,7 +6,7 @@ import Home from './pages/Home'
 import Checkout from './pages/Checkout'
 import Login from './pages/Login'
 import PageNotFound from './pages/PageNotFound'
-import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/DashboardPage'
 
 function App (): JSX.Element {
   return (

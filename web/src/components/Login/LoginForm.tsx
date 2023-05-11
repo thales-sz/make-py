@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import SignIn from './LoginComponents/SignIn'
-import SignUp from './LoginComponents/SignUp'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
 
 function LoginForm (): JSX.Element {
   const [haveAccount, setHaveAccount] = useState(true)

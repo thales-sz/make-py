@@ -1,26 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 
 interface ProductCardProps {
   _id?: string
   name: string
   description: string
   price: number
+  image: string
 }
 
 function ProductCard (props: ProductCardProps): JSX.Element {
+  const [fav, setFav] = useState(false)
+
   return (
-    <div className="flex max-h-[430px] w-1/3 min-w-[290px] max-w-[290px] flex-col justify-center rounded-lg bg-gradient-to-b from-slate-900 to-slate-100 p-2">
-      <img
-        src="https://www.sephora.com.br/dw/image/v2/BFJC_PRD/on/demandware.static/-/Sites-masterCatalog_Sephora/pt_BR/dwb63a2826/images/Color%20BR/Fenty/eaze%20drop/FB_SPR_SUM21_T2PRODUCT_SILO_EAZE_DROP_CLOSED_10_2000x2000_1500px.jpg?sw=400&sh=400&sm=fit"
-        width={280}
-        className="rounded-lg"
-      />
-      <div className="text-2xl font-normal">{props.name}</div>
-      <div className="text-gray-600">{props.description}</div>
-      <div className="text-xl font-bold">R$ {props.price}</div>
-      <button className="mx-auto w-2/3 rounded-xl bg-slate-600 p-2 text-slate-300 hover:scale-105 hover:bg-slate-500 hover:text-slate-200">
-        Adicionar ao carrinho
+    <div className="flex max-h-[550px] w-1/4 min-w-[250px] max-w-[300px] flex-col justify-center text-center rounded-lg p-2 shadow-lg bg-slate-50 hover:drop-shadow-2xl hover:scale-[1.02] hover:cursor-pointer transform transition duration-500 gap-4 text-slate-900">
+      <button onClick={() => { setFav(!fav) }}>
+        {fav ? <AiFillHeart size={20}/> : <AiOutlineHeart size={20}/>}
       </button>
+      <a href={`/product/${props._id}`}>
+        <img
+          src={props.image}
+          width={250}
+          className="rounded-lg"
+        />
+        <hr />
+        <div className="text-xl font-semibold">{props.name}</div>
+        <div className="text-gray-600 text-sm my-1">{props.description}</div>
+        <div className='flex gap-2 text-center justify-center flex-wrap'>
+          <s className="text-base">
+            {(props.price + 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+          </s>
+          <div className="text-3xl font-bold">
+            {props.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+          </div>
+          <div>ou até 10x de {(props.price / 10).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
+        </div>
+        <button className='bg-slate-400 rounded-3xl p-2 h-fit hover:bg-slate-500 shadow-md mt-2'>COMPRAR</button>
+      </a>
     </div>
   )
 }

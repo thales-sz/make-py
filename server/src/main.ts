@@ -10,6 +10,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
   });
+  const logger = new Logger(AppModule.name);
+  const configService = app.get<ConfigService>(ConfigService);
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -20,17 +22,13 @@ async function bootstrap() {
 
   app.use(
     session({
-      secret: 'my-secret',
+      secret: configService.get('SESSION_SECRET'),
       resave: false,
       saveUninitialized: false,
     }),
   );
 
-  const configService = app.get<ConfigService>(ConfigService);
-
   await app.listen(configService.get('PORT'));
-
-  const logger = new Logger(AppModule.name);
 
   logger.log(`Server is running on ${await app.getUrl()}`);
 }

@@ -1,8 +1,16 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import Dropdown from './Dropdown'
+
+import 'dotenv/config'
+
+const server = process.env.SERVER
 
 function Header (): JSX.Element {
+  const navigate = useNavigate()
   const [headerBlack, setHeaderBlack] = useState<boolean>(false)
+  const [logged, setLogged] = useState<boolean>(false)
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 200) {
@@ -11,6 +19,30 @@ function Header (): JSX.Element {
     }
     setHeaderBlack(false)
   })
+
+  useEffect(() => {
+    const token = localStorage.getItem('user')
+
+    if (token === null || token === '') { setLogged(false); return }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+
+    axios.get(`${server}/auth/token`, { headers })
+      .then((res) => {
+        if (res.status === 202) { setLogged(true); return }
+        setLogged(false)
+      })
+      .catch(() => { setLogged(false) })
+  }, [])
+
+  function handleSignOutButtonClick (): void {
+    setLogged(false)
+    localStorage.setItem('user', '')
+    navigate('/')
+  }
 
   return (
     <header
@@ -22,15 +54,13 @@ function Header (): JSX.Element {
         <nav className="invisible mt-7 ml-2 w-0 font-thin md:visible md:w-44">
           <span>by Pyetra Almeida</span>
         </nav>
-
-        <Link to="/" className="mt-7 h-fit pb-2 font-ace-sc tracking-widest max-sm:text-2xl md:text-4xl">
+        <Link to="/" className="mt-7 h-fit pb-2 font-ace-sc tracking-widest max-sm:text-2xl text-4xl">
           MAKEPY
         </Link>
-
         <nav className="mr-3 mt-7 flex justify-center gap-4 text-center max-sm:text-base md:w-44">
-          <Link to="/login">
-            Entrar
-          </Link>
+          {(logged ?? false)
+            ? <Dropdown handleSignOutButtonClick={handleSignOutButtonClick}/>
+            : <Link to="/login">Entrar</Link>}
           <Link to="/cart">
             Carrinho
             </Link>

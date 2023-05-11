@@ -1,6 +1,7 @@
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument } from 'src/database/abstract.schema';
 
+@Schema({ timestamps: true })
 export class Product extends AbstractDocument {
   @Prop({ type: String, required: true })
   name: string;
@@ -14,8 +15,11 @@ export class Product extends AbstractDocument {
   @Prop({ type: String, required: true })
   description: string;
 
-  @Prop({ type: Date, required: false, default: new Date() })
+  @Prop({ type: Date, required: false })
   createdAt?: Date;
+
+  @Prop({ type: Date, required: false })
+  updatedAt?: Date;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

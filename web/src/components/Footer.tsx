@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Footer(): JSX.Element {
+function Footer (): JSX.Element {
   return (
     <footer className="bottom-0 z-10 mt-8 flex w-full flex-col justify-center bg-gradient-to-t from-black to-slate-800 p-7 text-left text-slate-100">
       <section className="mx-auto flex gap-6">
