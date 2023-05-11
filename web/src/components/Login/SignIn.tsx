@@ -6,6 +6,10 @@ import { formSignInSchema } from '../../common/schema/form.schema'
 import { CgDanger } from 'react-icons/cg'
 import { useNavigate } from 'react-router-dom'
 
+import 'dotenv/config'
+
+const server = process.env.SERVER
+
 function SignIn (): JSX.Element {
   const [error, setError] = useState(false)
   const navigate = useNavigate()
@@ -24,7 +28,7 @@ function SignIn (): JSX.Element {
 
   const { mutateAsync, isError } = useMutation({
     mutationFn: async (user: IFormSignIn) => {
-      return await axios.post('http://localhost:3000/auth/signin', user)
+      return await axios.post(`${server}/auth/signin`, user)
     }
   })
 

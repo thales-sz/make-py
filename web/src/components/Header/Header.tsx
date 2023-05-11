@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Dropdown from './Dropdown'
 
+import 'dotenv/config'
+
+const server = process.env.SERVER
+
 function Header (): JSX.Element {
   const navigate = useNavigate()
   const [headerBlack, setHeaderBlack] = useState<boolean>(false)
@@ -26,7 +30,7 @@ function Header (): JSX.Element {
       Authorization: `Bearer ${token}`
     }
 
-    axios.get('http://localhost:3000/auth/token', { headers })
+    axios.get(`${server}/auth/token`, { headers })
       .then((res) => {
         if (res.status === 202) { setLogged(true); return }
         setLogged(false)

@@ -10,10 +10,14 @@ import Loading from '../components/Loading'
 import { CgDanger } from 'react-icons/cg'
 import Banner from '../components/Banner'
 
+import 'dotenv/config'
+
+const server = process.env.SERVER
+
 function Home (): JSX.Element {
   const { data, isFetching, isError } = useQuery({
     queryFn: async () => {
-      const { data } = await axios.get('http://localhost:3000/products')
+      const { data } = await axios.get(`${server}/products`)
       return data as IProduct[]
     },
     retry: 0,
