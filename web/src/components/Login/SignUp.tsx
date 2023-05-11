@@ -7,10 +7,6 @@ import axios from 'axios'
 import { formSignUpSchema } from '../../common/schema/form.schema'
 import { CgDanger } from 'react-icons/cg'
 
-import 'dotenv/config'
-
-const server = process.env.SERVER
-
 function SignUp (): JSX.Element {
   const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
@@ -32,7 +28,7 @@ function SignUp (): JSX.Element {
 
   const singUp = useMutation({
     mutationFn: async (user: IFormSignUp): Promise<IUser> => {
-      const { data } = await axios.post(`${server}/users/signup`, user)
+      const { data } = await axios.post('https://make-py-server.onrender.com/users/signup', user)
       return data as IUser
     },
     onError: async (error: any) => {
@@ -42,7 +38,7 @@ function SignUp (): JSX.Element {
 
   const singIn = useMutation({
     mutationFn: async (user: IFormSignIn) => {
-      return await axios.post(`${server}/auth/signin`, user)
+      return await axios.post('https://make-py-server.onrender.com/auth/signin', user)
     }
   })
 
