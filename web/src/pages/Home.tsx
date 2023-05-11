@@ -21,8 +21,8 @@ function Home (): JSX.Element {
 
   const data = {
     _id: 'das6d4asd531asd1a2s',
-    name: 'Produto Novo',
-    description: 'descrição',
+    name: 'Base Sephora',
+    description: 'Uma base linda',
     price: 450
   }
 
@@ -36,7 +36,7 @@ function Home (): JSX.Element {
       <section className="mx-auto flex max-w-7xl flex-wrap justify-center gap-5">
         {isFetching
           ? <Loading absolute={false}/>
-          : [data].map((product) => {
+          : [data, data, data, data, data].map((product) => {
               return <ProductCard key={product?._id} {...product} />
             })}
       </section>

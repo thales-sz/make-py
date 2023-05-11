@@ -9,7 +9,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Public } from 'src/common/metadata';
+import { Admin, Public } from 'src/common/metadata';
 import { SignInDto } from './dto/auth.dto';
 import { Request } from 'express';
 
@@ -30,12 +30,16 @@ export class AuthController {
     return { token };
   }
 
-  @Public()
   @HttpCode(HttpStatus.ACCEPTED)
   @Get('token')
   async validateToken(@Req() req: Request) {
-    console.log(req);
-    const sucess = await this.authService.validateToken(req);
-    console.log(sucess);
+    await this.authService.validateToken(req);
+  }
+
+  @Admin()
+  @HttpCode(HttpStatus.ACCEPTED)
+  @Get('admin')
+  async validateAdmin(@Req() req: Request) {
+    await this.authService.validateToken(req);
   }
 }

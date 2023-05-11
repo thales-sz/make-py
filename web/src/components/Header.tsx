@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Dropdown from './Header/Dropdown'
 
 function Header (): JSX.Element {
   const navigate = useNavigate()
@@ -53,7 +54,9 @@ function Header (): JSX.Element {
           MAKEPY
         </Link>
         <nav className="mr-3 mt-7 flex justify-center gap-4 text-center max-sm:text-base md:w-44">
-          {(logged ?? false) ? <button onClick={handleSignOutButtonClick}>Sair</button> : <Link to="/login">Entrar</Link>}
+          {(logged ?? false)
+            ? <Dropdown handleSignOutButtonClick={handleSignOutButtonClick}/>
+            : <Link to="/login">Entrar</Link>}
           <Link to="/cart">
             Carrinho
             </Link>
