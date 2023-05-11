@@ -21,7 +21,6 @@ export class ProductsController {
   @Admin()
   @Post()
   async create(@Body() createProductDto: CreateProductDto) {
-    console.log(createProductDto);
     const product = await this.productsService.findOne({
       name: createProductDto.name,
     });
