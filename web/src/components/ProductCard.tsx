@@ -17,7 +17,7 @@ function ProductCard (props: ProductCardProps): JSX.Element {
       />
       <div className="text-2xl font-normal">{props.name}</div>
       <div className="text-gray-600">{props.description}</div>
-      <div className="text-xl font-bold">R$ {props.price}</div>
+      <div className="text-xl font-bold">{props.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
       <button className="mx-auto w-2/3 rounded-xl bg-slate-600 p-2 text-slate-300 hover:scale-105 hover:bg-slate-500 hover:text-slate-200">
         Adicionar ao carrinho
       </button>

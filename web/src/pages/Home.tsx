@@ -10,13 +10,21 @@ import Loading from '../components/Loading'
 import { CgDanger } from 'react-icons/cg'
 
 function Home (): JSX.Element {
-  const { data, isFetching, isError } = useQuery({
+  const { isFetching, isError } = useQuery({
     queryFn: async () => {
       const { data } = await axios.get('http://localhost:3000/products')
       return data as IProduct[]
     },
+    retry: 0,
     refetchOnWindowFocus: false
   })
+
+  const data = {
+    _id: 'das6d4asd531asd1a2s',
+    name: 'Produto Novo',
+    description: 'descrição',
+    price: 450
+  }
 
   return (
     <div className="w-full">
@@ -28,15 +36,15 @@ function Home (): JSX.Element {
       <section className="mx-auto flex max-w-7xl flex-wrap justify-center gap-5">
         {isFetching
           ? <Loading absolute={false}/>
-          : data?.map((product) => {
-            return <ProductCard key={product?._id} {...product} />
-          })}
+          : [data].map((product) => {
+              return <ProductCard key={product?._id} {...product} />
+            })}
       </section>
       {isError
         ? <div className='flex text-red-500 gap-2'>
           <CgDanger width={10} color='red'/>
-        Ocorreu um erro!
-        </div>
+            Ocorreu um erro!
+          </div>
         : null}
       <Footer />
     </div>

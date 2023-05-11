@@ -1,4 +1,6 @@
+import axios from 'axios'
 import React, { useState } from 'react'
+import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 
 function Header (): JSX.Element {
@@ -10,6 +12,22 @@ function Header (): JSX.Element {
       return
     }
     setHeaderBlack(false)
+  })
+
+  const token = localStorage.getItem('user')
+
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`
+  }
+
+  const { isSuccess } = useQuery({
+    queryFn: async () => {
+      const { data } = await axios.get('http://localhost:3000/auth/token', { headers })
+      return data as boolean
+    },
+    retry: 0,
+    refetchOnWindowFocus: false
   })
 
   return (
@@ -28,9 +46,7 @@ function Header (): JSX.Element {
         </Link>
 
         <nav className="mr-3 mt-7 flex justify-center gap-4 text-center max-sm:text-base md:w-44">
-          <Link to="/login">
-            Entrar
-          </Link>
+          {(isSuccess ?? false) ? <Link to="/login">Sair</Link> : <Link to="/login">Entrar</Link>}
           <Link to="/cart">
             Carrinho
             </Link>
