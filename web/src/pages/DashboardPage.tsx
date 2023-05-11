@@ -11,7 +11,7 @@ function DashboardPage (): JSX.Element {
   const navigate = useNavigate()
   const token = localStorage.getItem('user')
 
-  if (token === null || token === '') navigate('/login')
+  if (token === null) navigate('/login')
 
   const headers = {
     'Content-Type': 'application/json',
