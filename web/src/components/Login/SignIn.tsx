@@ -5,9 +5,11 @@ import axios from 'axios'
 import { formSignInSchema } from '../../common/schema/form.schema'
 import { CgDanger } from 'react-icons/cg'
 import { useNavigate } from 'react-router-dom'
+import Loading from '../Loading'
 
 function SignIn (): JSX.Element {
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const [form, setForm] = useState<IFormSignIn>({
     email: '',
@@ -31,12 +33,14 @@ function SignIn (): JSX.Element {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     try {
+      setLoading(true)
       const validForm = formSignInSchema.parse(form)
       const { data } = await mutateAsync(validForm)
       if (!isError) localStorage.setItem('user', data.token)
+      setLoading(false)
       navigate('/')
     } catch (error) {
-      console.error(error)
+      setLoading(false)
       setError(true)
     }
   }
@@ -110,12 +114,14 @@ function SignIn (): JSX.Element {
       >
         Entrar
       </button>
-      {isError || error
-        ? <div className='flex text-red-500 gap-2'>
+      {loading
+        ? <Loading absolute={true}/>
+        : isError || error
+          ? <div className='flex text-red-500 gap-2'>
           <CgDanger width={10} color='red'/>
         Email ou senha inválidos!
         </div>
-        : null}
+          : null}
     </form>
   )
 }

@@ -6,9 +6,11 @@ import { useMutation } from 'react-query'
 import axios from 'axios'
 import { formSignUpSchema } from '../../common/schema/form.schema'
 import { CgDanger } from 'react-icons/cg'
+import Loading from '../Loading'
 
 function SignUp (): JSX.Element {
   const [errorMessage, setErrorMessage] = useState('')
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const [form, setForm] = useState<IFormSignUp>({
@@ -32,7 +34,10 @@ function SignUp (): JSX.Element {
       return data as IUser
     },
     onError: async (error: any) => {
-      if (error.request.status === 409) setErrorMessage('Este email já está em uso')
+      if (error.request.status === 409) {
+        setLoading(false)
+        setErrorMessage('Este email já está em uso')
+      }
     }
   })
 
@@ -45,14 +50,17 @@ function SignUp (): JSX.Element {
   async function handleSubmit (e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault()
     try {
+      setLoading(true)
       formSignUpSchema.parse(form)
     } catch (error: any) {
+      setLoading(false)
       setErrorMessage(JSON.parse(error.message)[0].message)
     } finally {
       await singUp.mutateAsync(form)
       const { data } = await singIn.mutateAsync({ email: form.email, password: form.password, remember: false })
       if (!singUp.isError) localStorage.setItem('user', data.token)
       navigate('/')
+      setLoading(false)
     }
   }
 
@@ -155,12 +163,14 @@ function SignUp (): JSX.Element {
       >
         Cadastrar
       </button>
-      {singUp.isError || singIn.isError
-        ? <div className='flex text-red-500 gap-2'>
+      {loading
+        ? <Loading absolute={true}/>
+        : singUp.isError || singIn.isError
+          ? <div className='flex text-red-500 gap-2'>
           <CgDanger width={10} color='red'/>
         {errorMessage}
         </div>
-        : null}
+          : null}
     </form>
   )
 }
