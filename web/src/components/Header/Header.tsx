@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Dropdown from './Header/Dropdown'
+import Dropdown from './Dropdown'
 
 function Header (): JSX.Element {
   const navigate = useNavigate()
