@@ -21,6 +21,11 @@ function SignUp (): JSX.Element {
     password: ''
   })
 
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  }
+
   function handleInputChange ({ target }: React.ChangeEvent<HTMLInputElement>): void {
     setForm({
       ...form,
@@ -30,7 +35,7 @@ function SignUp (): JSX.Element {
 
   const singUp = useMutation({
     mutationFn: async (user: IFormSignUp): Promise<IUser> => {
-      const { data } = await axios.post('https://make-py-server.onrender.com/users/signup', user)
+      const { data } = await axios.post('https://make-py-server.onrender.com/users/signup', user, { headers })
       return data as IUser
     },
     onError: async (error: any) => {
@@ -43,7 +48,7 @@ function SignUp (): JSX.Element {
 
   const singIn = useMutation({
     mutationFn: async (user: IFormSignIn) => {
-      return await axios.post('https://make-py-server.onrender.com/auth/signin', user)
+      return await axios.post('https://make-py-server.onrender.com/auth/signin', user, { headers })
     }
   })
 

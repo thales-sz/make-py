@@ -17,6 +17,11 @@ function SignIn (): JSX.Element {
     remember: false
   })
 
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  }
+
   function handleInputChange ({ target }: React.ChangeEvent<HTMLInputElement>): void {
     setForm({
       ...form,
@@ -26,7 +31,7 @@ function SignIn (): JSX.Element {
 
   const { mutateAsync, isError } = useMutation({
     mutationFn: async (user: IFormSignIn) => {
-      return await axios.post('https://make-py-server.onrender.com/auth/signin', user)
+      return await axios.post('https://make-py-server.onrender.com/auth/signin', user, { headers })
     }
   })
 
