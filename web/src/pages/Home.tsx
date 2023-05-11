@@ -11,9 +11,14 @@ import { CgDanger } from 'react-icons/cg'
 import Banner from '../components/Banner'
 
 function Home (): JSX.Element {
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  }
+
   const { data, isFetching, isError } = useQuery({
     queryFn: async () => {
-      const { data } = await axios.get('https://make-py-server.onrender.com/products')
+      const { data } = await axios.get('https://make-py-server.onrender.com/products', { headers })
       return data as IProduct[]
     },
     retry: 0,

@@ -14,6 +14,7 @@ function DashboardPage (): JSX.Element {
   if (token === null) navigate('/login')
 
   const headers = {
+    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`
   }
