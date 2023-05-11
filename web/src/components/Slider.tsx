@@ -11,7 +11,7 @@ function Slider (): JSX.Element {
       url: 'https://images8.alphacoders.com/111/1110066.jpg'
     },
     {
-      url: 'https://content.syndigo.com/asset/d8ae579b-3eb1-4a75-86e1-dba49124327f/1920.webp'
+      url: 'https://media-public.canva.com/_srgM/MAELsi_srgM/1/s2.jpg'
     },
     {
       url: 'https://images.unsplash.com/photo-1597225244660-1cd128c64284?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
@@ -20,7 +20,7 @@ function Slider (): JSX.Element {
       url: 'https://images.unsplash.com/photo-1560130055-e3306e04884b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1202&q=80'
     },
     {
-      url: 'https://content.syndigo.com/asset/28ba0488-7526-4b85-aaa6-ee027bc80f21/1920.jpeg'
+      url: 'https://media-public.canva.com/dPLhE/MADyRMdPLhE/1/s2.jpg'
     }
   ]
 

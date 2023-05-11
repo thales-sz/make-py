@@ -4,7 +4,7 @@ import { AbstractDocument } from 'src/database/abstract.schema';
 
 export type OrderDocument = HydratedDocument<Order>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Order extends AbstractDocument {
   @Prop({ type: String, required: true })
   userId: string;
@@ -12,8 +12,11 @@ export class Order extends AbstractDocument {
   @Prop({ type: Number, required: true })
   totalPrice: number;
 
-  @Prop({ type: Date, required: true, default: new Date() })
-  saleDate: Date;
+  @Prop({ type: Date, required: false, default: new Date() })
+  createdAt?: Date;
+
+  @Prop({ type: Date, required: false, default: new Date() })
+  updatedAt?: Date;
 
   @Prop({
     type: String,

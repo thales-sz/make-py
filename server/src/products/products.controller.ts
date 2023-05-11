@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   NotFoundException,
+  ConflictException,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -19,7 +20,14 @@ export class ProductsController {
 
   @Admin()
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
+  async create(@Body() createProductDto: CreateProductDto) {
+    console.log(createProductDto);
+    const product = await this.productsService.findOne({
+      name: createProductDto.name,
+    });
+
+    if (product) throw new ConflictException(`This product already exists`);
+
     return this.productsService.create(createProductDto);
   }
 

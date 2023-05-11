@@ -7,9 +7,11 @@ import { FilterQuery } from 'mongoose';
 
 @Injectable()
 export class ProductsService {
-  constructor(private productsRepository: ProductsRepository) {}
+  constructor(private readonly productsRepository: ProductsRepository) {}
+
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    return this.productsRepository.create(createProductDto);
+    const product = { ...createProductDto };
+    return await this.productsRepository.create(product);
   }
 
   async findAll(filterQuery: FilterQuery<Product>): Promise<Product[]> {

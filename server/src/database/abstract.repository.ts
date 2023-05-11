@@ -15,11 +15,14 @@ export abstract class AbstractRepository<T extends AbstractDocument> {
   ) {}
 
   async create(document: Omit<T, '_id'>, options?: SaveOptions): Promise<T> {
+    console.log('repository', document);
     const createdDocument = new this.model({
       _id: new Types.ObjectId(),
       ...document,
     });
-    return (await createdDocument.save(options)).toJSON() as T;
+
+    console.log('doc created', createdDocument);
+    return (await createdDocument.save(options)).toJSON() as unknown as T;
   }
 
   async findOne(filterQuery: FilterQuery<T>): Promise<T | null> {

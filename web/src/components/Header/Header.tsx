@@ -50,7 +50,7 @@ function Header (): JSX.Element {
         <nav className="invisible mt-7 ml-2 w-0 font-thin md:visible md:w-44">
           <span>by Pyetra Almeida</span>
         </nav>
-        <Link to="/" className="mt-7 h-fit pb-2 font-ace-sc tracking-widest max-sm:text-2xl md:text-4xl">
+        <Link to="/" className="mt-7 h-fit pb-2 font-ace-sc tracking-widest max-sm:text-2xl text-4xl">
           MAKEPY
         </Link>
         <nav className="mr-3 mt-7 flex justify-center gap-4 text-center max-sm:text-base md:w-44">
