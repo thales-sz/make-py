@@ -11,7 +11,6 @@ import {
 import { AuthService } from './auth.service';
 import { Public } from 'src/common/metadata';
 import { SignInDto } from './dto/auth.dto';
-import { UnprocessableEntityException } from '@nestjs/common';
 import { Request } from 'express';
 
 @Controller('auth')
@@ -31,13 +30,12 @@ export class AuthController {
     return { token };
   }
 
+  @Public()
   @HttpCode(HttpStatus.ACCEPTED)
   @Get('token')
   async validateToken(@Req() req: Request) {
-    try {
-      await this.authService.validateToken(req);
-    } catch (error) {
-      throw new UnprocessableEntityException('Invalid token');
-    }
+    console.log(req);
+    const sucess = await this.authService.validateToken(req);
+    console.log(sucess);
   }
 }

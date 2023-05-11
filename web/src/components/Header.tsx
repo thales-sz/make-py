@@ -1,10 +1,11 @@
 import axios from 'axios'
-import React, { useState } from 'react'
-import { useQuery } from 'react-query'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Header (): JSX.Element {
+  const navigate = useNavigate()
   const [headerBlack, setHeaderBlack] = useState<boolean>(false)
+  const [logged, setLogged] = useState<boolean>(false)
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 200) {
@@ -14,21 +15,29 @@ function Header (): JSX.Element {
     setHeaderBlack(false)
   })
 
-  const token = localStorage.getItem('user')
+  useEffect(() => {
+    const token = localStorage.getItem('user')
 
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`
+    if (token === null || token === '') { setLogged(false); return }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+
+    axios.get('http://localhost:3000/auth/token', { headers })
+      .then((res) => {
+        if (res.status === 202) { setLogged(true); return }
+        setLogged(false)
+      })
+      .catch(() => { setLogged(false) })
+  }, [])
+
+  function handleSignOutButtonClick (): void {
+    setLogged(false)
+    localStorage.setItem('user', '')
+    navigate('/')
   }
-
-  const { isSuccess } = useQuery({
-    queryFn: async () => {
-      const { data } = await axios.get('http://localhost:3000/auth/token', { headers })
-      return data as boolean
-    },
-    retry: 0,
-    refetchOnWindowFocus: false
-  })
 
   return (
     <header
@@ -40,13 +49,11 @@ function Header (): JSX.Element {
         <nav className="invisible mt-7 ml-2 w-0 font-thin md:visible md:w-44">
           <span>by Pyetra Almeida</span>
         </nav>
-
         <Link to="/" className="mt-7 h-fit pb-2 font-ace-sc tracking-widest max-sm:text-2xl md:text-4xl">
           MAKEPY
         </Link>
-
         <nav className="mr-3 mt-7 flex justify-center gap-4 text-center max-sm:text-base md:w-44">
-          {(isSuccess ?? false) ? <Link to="/login">Sair</Link> : <Link to="/login">Entrar</Link>}
+          {(logged ?? false) ? <button onClick={handleSignOutButtonClick}>Sair</button> : <Link to="/login">Entrar</Link>}
           <Link to="/cart">
             Carrinho
             </Link>
