@@ -7,10 +7,6 @@ import Unathorized from '../components/Unathorized'
 import Loading from '../components/Loading'
 import Dashboard from '../components/Dashboard/Dashboard'
 
-import 'dotenv/config'
-
-const server = process.env.SERVER
-
 function DashboardPage (): JSX.Element {
   const navigate = useNavigate()
   const token = localStorage.getItem('user')
@@ -24,7 +20,7 @@ function DashboardPage (): JSX.Element {
 
   const { isLoading, isError } = useQuery({
     queryFn: async () => {
-      const { data } = await axios.get(`${server}/orders`, { headers })
+      const { data } = await axios.get('https://make-py-server.onrender.com/orders', { headers })
       return data
     },
     retry: 0,

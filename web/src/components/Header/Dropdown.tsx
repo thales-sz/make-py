@@ -2,10 +2,6 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import 'dotenv/config'
-
-const server = process.env.SERVER
-
 interface DropdownProps {
   handleSignOutButtonClick: () => void
 }
@@ -24,7 +20,7 @@ function Dropdown ({ handleSignOutButtonClick }: DropdownProps): JSX.Element {
       Authorization: `Bearer ${token}`
     }
 
-    axios.get(`${server}/auth/admin`, { headers })
+    axios.get('https://make-py-server.onrender.com/auth/admin', { headers })
       .then((res) => {
         if (res.status === 202) { setIsAdmin(true); return }
         setIsAdmin(false)
