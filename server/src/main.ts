@@ -8,7 +8,7 @@ import * as session from 'express-session';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    cors: true,
+    cors: { origin: ['https://make-py.vercel.app/', 'http://localhost:3000'] },
   });
   const logger = new Logger(AppModule.name);
   const configService = app.get<ConfigService>(ConfigService);
