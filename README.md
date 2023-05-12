@@ -1,2 +1,6 @@
 # Make Py - Cosmetics
-Um projeto pessoal de E-commerce de maquiagens
+Make Py é um projeto de e-commerce fullstack que utiliza tecnologias modernas e eficientes para oferecer uma experiência de compra online rápida, segura e intuitiva. O back-end foi construído com o framework TypeScript NestJS, utilizando o banco de dados MongoDB e o gerenciador de containers Docker para garantir escalabilidade e disponibilidade. O back-end também utiliza o framework Express para gerenciar as rotas da aplicação, implementando conceitos de programação orientada a objetos (POO) com o auxílio do Mongoose. Para garantir a qualidade do código, foram implementados testes automatizados utilizando a biblioteca Jest.
+
+Já o front-end foi desenvolvido utilizando a biblioteca React, com o auxílio do React Query para gerenciamento de dados em cache e Zod para validação de dados. A comunicação entre o front-end e o back-end é realizada utilizando a biblioteca Axios. Para garantir a qualidade do código, foram implementados testes automatizados utilizando a biblioteca Jest.
+
+Com o Make Py, os usuários podem navegar pelos produtos disponíveis na loja, adicioná-los ao carrinho, finalizar a compra e acompanhar o status do pedido. A plataforma também oferece recursos como busca por produtos, filtros por categoria e preço, além de um painel administrativo para gestão dos produtos, pedidos e usuários. O Make Py é uma solução completa e robusta para e-commerce, oferecendo uma experiência de compra online confiável e segura.
