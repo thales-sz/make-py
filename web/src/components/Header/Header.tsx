@@ -22,7 +22,6 @@ function Header (): JSX.Element {
     if (token === null || token === '') { setLogged(false); return }
 
     const headers = {
-      'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     }

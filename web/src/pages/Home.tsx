@@ -12,7 +12,6 @@ import Banner from '../components/Banner'
 
 function Home (): JSX.Element {
   const headers = {
-    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json'
   }
 
