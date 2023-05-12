@@ -48,7 +48,7 @@ function Header (): JSX.Element {
     >
       <section className="mt-3 flex justify-between font-semibold">
         <nav className="invisible mt-7 ml-2 w-0 font-thin md:visible md:w-44">
-          <span>by Pyetra Almeida</span>
+          <span>Desenvolvido por Thales Chagas</span>
         </nav>
         <Link to="/" className="mt-7 h-fit pb-2 font-ace-sc tracking-widest max-sm:text-2xl text-4xl">
           MAKEPY
