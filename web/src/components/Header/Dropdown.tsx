@@ -20,7 +20,7 @@ function Dropdown ({ handleSignOutButtonClick }: DropdownProps): JSX.Element {
       Authorization: `Bearer ${token}`
     }
 
-    axios.get('https://make-py-server.onrender.com/auth/admin', { headers })
+    axios.get('http://localhost:3000/auth/admin', { headers })
       .then((res) => {
         if (res.status === 202) { setIsAdmin(true); return }
         setIsAdmin(false)

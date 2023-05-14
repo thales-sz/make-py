@@ -14,7 +14,6 @@ function DashboardPage (): JSX.Element {
   if (token === null) navigate('/login')
 
   const headers = {
-    'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`
   }
 

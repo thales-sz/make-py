@@ -5,11 +5,10 @@ import { ConfigService } from '@nestjs/config';
 
 import 'dotenv/config';
 import * as session from 'express-session';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    cors: true,
-  });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const logger = new Logger(AppModule.name);
   const configService = app.get<ConfigService>(ConfigService);
 
@@ -19,6 +18,12 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  app.enableCors({
+    origin: ['http://localhost:5173', 'https://make-py.vercel.app/'],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    credentials: true,
+  });
 
   app.use(
     session({
