@@ -45,11 +45,9 @@ function Header (): JSX.Element {
         !headerBlack ? 'bg-transparent' : 'bg-slate-900'
       } fixed z-10 flex max-h-40 w-full flex-col bg-gradient-to-b max-sm:max-h-30 from-black to-transparent font-bold text-slate-100 hover:bg-slate-900`}
     >
-      <section className="mt-3 flex justify-between font-semibold h-fit max-sm:h-20 max-md:h-20">
-        <nav className="invisible mt-7 ml-2 w-0 font-thin md:visible md:w-44">
-          <span>Desenvolvido por Thales Chagas</span>
-        </nav>
-        <Link to="/" className="mt-7 font-ace-sc tracking-widest max-sm:text-2xl text-4xl">
+      <section className="flex justify-between font-semibold h-fit max-sm:h-20 max-md:h-20">
+        <div className='h-20 w-44 max-sm:w-20'/>
+        <Link to="/" className="mt-6 font-ace-sc tracking-widest max-sm:text-2xl text-4xl">
           MAKEPY
         </Link>
         <nav className="mr-3 mt-7 flex justify-center gap-4 text-center max-sm:text-base md:w-44">
@@ -62,16 +60,16 @@ function Header (): JSX.Element {
         </nav>
       </section>
       <nav className="mx-auto flex gap-2 pb-3 text-base font-semibold text-slate-100">
-        <a className="border-r border-slate-100 pr-2 hover:cursor-pointer">
-          PELE
-        </a>
-        <a className="border-r border-slate-100 pr-2 hover:cursor-pointer">
-          OLHOS
-        </a>
-        <a className="border-r border-slate-100 pr-2 hover:cursor-pointer">
+        <a className="border-r border-slate-100 pr-2 hover:cursor-pointer hover:underline">
           BOCA
         </a>
-        <a className="hover:cursor-pointer">ACESSÓRIOS</a>
+        <a className="border-r border-slate-100 pr-2 hover:cursor-pointer hover:underline">
+          OLHOS
+        </a>
+        <a className="border-r border-slate-100 pr-2 hover:cursor-pointer hover:underline">
+          PELE
+        </a>
+        <a className="hover:cursor-pointer hover:underline">ACESSÓRIOS</a>
       </nav>
     </header>
   )

@@ -33,6 +33,7 @@ export class ProductsController {
   @Public()
   @Get()
   findAll() {
+    console.log('Find all products');
     return this.productsService.findAll({});
   }
 
