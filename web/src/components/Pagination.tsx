@@ -1,39 +1,39 @@
 import React from 'react'
+import { BiRightArrowAlt, BiLeftArrowAlt } from 'react-icons/bi'
 
-function Pagination (): JSX.Element {
+interface PaginationProps {
+  lastIndex: number
+}
+
+function Pagination ({ lastIndex }: PaginationProps): JSX.Element {
+  const pageArray = Object.keys(new Array(lastIndex).fill(null)).map(Number)
+
   return (
-<nav aria-label="Page navigation">
-  <ul className="inline-flex items-center -space-x-px">
-    <li>
-      <a href="#" className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-        <span className="sr-only">Previous</span>
-        <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-      </a>
-    </li>
-    <li>
-      <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-    </li>
-    <li>
-      <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-    </li>
-    <li>
-      <a href="#" aria-current="page" className="z-10 px-3 py-2 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-    </li>
-    <li>
-      <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-    </li>
-    <li>
-      <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-    </li>
-    <li>
-      <a href="#" className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-        <span className="sr-only">Next</span>
-        <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
-      </a>
-    </li>
-  </ul>
-</nav>
-
+    <nav aria-label="Page navigation" className='max-h-16'>
+      <ul className="inline-flex items-center gap-10 border-t border-slate-300 my-6">
+        <li>
+          <button className="px-3 py-3 ml-0 text-slate-600 hover:border-slate-400 hover:border-t-2">
+            <span className="sr-only">Previous</span>
+            <BiLeftArrowAlt size={25}/>
+          </button>
+        </li>
+        <ul className='flex'>
+          {pageArray.map((pageNumber) => {
+            return (
+            <li key={pageNumber + 1}>
+              <button className="px-3 -mt-1 py-3 text-slate-800 hover:border-slate-400 hover:border-t-2 border-t-2 border-slate-600">{pageNumber + 1}</button>
+            </li>
+            )
+          })}
+        </ul>
+        <li>
+          <button className="px-3 py-3 text-slate-600 hover:text-slate-800 hover:border-t-2 hover:border-slate-400">
+            <span className="sr-only">Next</span>
+            <BiRightArrowAlt size={25}/>
+          </button>
+        </li>
+      </ul>
+    </nav>
   )
 }
 

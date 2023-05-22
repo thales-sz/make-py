@@ -9,7 +9,7 @@ import { type IProduct } from '../interfaces/product.interface'
 import Loading from '../components/Loading'
 import { CgDanger } from 'react-icons/cg'
 import Banner from '../components/Banner'
-import { Pagination } from '@mui/material'
+import Pagination from '../components/Pagination'
 
 function Home (): JSX.Element {
   const { data, isFetching, isError } = useQuery({
@@ -20,6 +20,8 @@ function Home (): JSX.Element {
     retry: 0,
     refetchOnWindowFocus: false
   })
+
+  const productsArray = data?.slice(0, 12)
 
   return (
     <div className="w-full">
@@ -33,10 +35,10 @@ function Home (): JSX.Element {
         {isFetching
           ? <Loading absolute={false}/>
           : <>
-            {data?.map((product) => {
+            {productsArray?.map((product) => {
               return <ProductCard key={product?._id} {...product} />
             })}
-            <Pagination />
+            <Pagination lastIndex={2}/>
           </>
           }
       </section>
