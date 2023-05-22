@@ -115,6 +115,7 @@ function SignIn (): JSX.Element {
       <button
         type="submit"
         className="hover:bg-primary-700 w-full rounded-lg bg-slate-700 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-blue-300"
+        disabled={loading}
       >
         Entrar
       </button>

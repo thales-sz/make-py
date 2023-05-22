@@ -36,7 +36,7 @@ function Home (): JSX.Element {
           })}
       </section>
       {isError
-        ? <div className='flex text-red-500 gap-2'>
+        ? <div className='flex text-red-500 gap-2 mx-auto'>
           <CgDanger width={10} color='red'/>
             Ocorreu um erro!
           </div>

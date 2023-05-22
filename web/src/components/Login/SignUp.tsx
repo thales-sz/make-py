@@ -63,8 +63,8 @@ function SignUp (): JSX.Element {
       await singUp.mutateAsync(form)
       const { data } = await singIn.mutateAsync({ email: form.email, password: form.password, remember: false })
       if (!singUp.isError) localStorage.setItem('user', data.token)
-      navigate('/')
       setLoading(false)
+      navigate('/')
     }
   }
 

@@ -13,7 +13,7 @@ function ProductCard (props: ProductCardProps): JSX.Element {
   const [fav, setFav] = useState(false)
 
   return (
-    <div className="flex max-h-[550px] w-1/4 min-w-[250px] max-w-[300px] flex-col justify-center text-center rounded-lg p-2 shadow-lg bg-slate-50 hover:drop-shadow-2xl hover:scale-[1.02] hover:cursor-pointer transform transition duration-500 gap-4 text-slate-900">
+    <div className="flex max-h-[550px] w-1/4 min-w-[250px] max-w-[300px] flex-col justify-center text-center rounded-lg p-2 shadow-lg bg-slate-50 hover:drop-shadow-2xl hover:scale-[1.01] hover:cursor-pointer transform transition duration-500 gap-4 text-slate-900">
       <button onClick={() => { setFav(!fav) }}>
         {fav ? <AiFillHeart size={20}/> : <AiOutlineHeart size={20}/>}
       </button>
