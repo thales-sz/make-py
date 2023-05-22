@@ -9,6 +9,7 @@ import { type IProduct } from '../interfaces/product.interface'
 import Loading from '../components/Loading'
 import { CgDanger } from 'react-icons/cg'
 import Banner from '../components/Banner'
+import { Pagination } from '@mui/material'
 
 function Home (): JSX.Element {
   const { data, isFetching, isError } = useQuery({
@@ -31,9 +32,13 @@ function Home (): JSX.Element {
       <section className="mx-auto flex max-w-7xl flex-wrap justify-center gap-5">
         {isFetching
           ? <Loading absolute={false}/>
-          : data?.map((product) => {
-            return <ProductCard key={product?._id} {...product} />
-          })}
+          : <>
+            {data?.map((product) => {
+              return <ProductCard key={product?._id} {...product} />
+            })}
+            <Pagination />
+          </>
+          }
       </section>
       {isError
         ? <div className='flex text-red-500 gap-2 mx-auto'>

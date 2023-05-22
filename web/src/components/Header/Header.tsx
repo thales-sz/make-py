@@ -54,7 +54,7 @@ function Header (): JSX.Element {
           {(logged ?? false)
             ? <Dropdown handleSignOutButtonClick={handleSignOutButtonClick}/>
             : <Link to="/login">Entrar</Link>}
-          <Link to="/cart">
+          <Link to="/cart" className='hover:underline'>
             Carrinho
             </Link>
         </nav>
