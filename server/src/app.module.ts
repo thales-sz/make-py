@@ -22,6 +22,7 @@ import { PaymentModule } from './payment/payment.module';
       isGlobal: true,
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
+        ACCESS_TOKEN_MERCADO_PAGO: Joi.string().required(),
       }),
     }),
     UsersModule,
@@ -29,11 +30,11 @@ import { PaymentModule } from './payment/payment.module';
     OrdersModule,
     AuthModule,
     DatabaseModule,
+    PaymentModule,
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 100,
     }),
-    PaymentModule,
   ],
   controllers: [HealthCheckController],
   providers: [
