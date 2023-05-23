@@ -3,10 +3,10 @@ import { insertMaskInPhone } from '../../common/helper/phoneMask'
 import type { IFormSignIn, IFormSignUp, IUser } from '../../interfaces/form.interface'
 import { useNavigate } from 'react-router-dom'
 import { useMutation } from 'react-query'
-import axios from 'axios'
 import { formSignUpSchema } from '../../common/schema/form.schema'
 import { CgDanger } from 'react-icons/cg'
 import Loading from '../Loading'
+import { api } from '../../api/queryClient'
 
 function SignUp (): JSX.Element {
   const [errorMessage, setErrorMessage] = useState('')
@@ -21,10 +21,6 @@ function SignUp (): JSX.Element {
     password: ''
   })
 
-  const headers = {
-    'Content-Type': 'application/json'
-  }
-
   function handleInputChange ({ target }: React.ChangeEvent<HTMLInputElement>): void {
     setForm({
       ...form,
@@ -34,7 +30,7 @@ function SignUp (): JSX.Element {
 
   const singUp = useMutation({
     mutationFn: async (user: IFormSignUp): Promise<IUser> => {
-      const { data } = await axios.post('https://make-py-server.onrender.com/users/signup', user, { headers })
+      const { data } = await api.post('/users/signup', user)
       return data as IUser
     },
     onError: async (error: any) => {
@@ -47,7 +43,7 @@ function SignUp (): JSX.Element {
 
   const singIn = useMutation({
     mutationFn: async (user: IFormSignIn) => {
-      return await axios.post('https://make-py-server.onrender.com/auth/signin', user, { headers })
+      return await api.post('/auth/signin', user)
     }
   })
 

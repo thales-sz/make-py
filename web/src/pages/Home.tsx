@@ -4,17 +4,17 @@ import Slider from '../components/Slider'
 import ProductCard from '../components/ProductCard'
 import Footer from '../components/Footer'
 import { useQuery } from 'react-query'
-import axios from 'axios'
 import { type IProduct } from '../interfaces/product.interface'
 import Loading from '../components/Loading'
 import { CgDanger } from 'react-icons/cg'
 import Banner from '../components/Banner'
 import Pagination from '../components/Pagination'
+import { api } from '../api/queryClient'
 
 function Home (): JSX.Element {
   const { data, isFetching, isError } = useQuery({
     queryFn: async () => {
-      const { data } = await axios.get('https://make-py-server.onrender.com/products')
+      const { data } = await api.get('/products')
       return data as IProduct[]
     },
     retry: 0,

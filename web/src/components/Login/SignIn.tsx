@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useMutation } from 'react-query'
 import { type IFormSignIn } from '../../interfaces/form.interface'
-import axios from 'axios'
 import { formSignInSchema } from '../../common/schema/form.schema'
 import { CgDanger } from 'react-icons/cg'
 import { useNavigate } from 'react-router-dom'
 import Loading from '../Loading'
+import { api } from '../../api/queryClient'
 
 function SignIn (): JSX.Element {
   const [error, setError] = useState(false)
@@ -17,10 +17,6 @@ function SignIn (): JSX.Element {
     remember: false
   })
 
-  const headers = {
-    'Content-Type': 'application/json'
-  }
-
   function handleInputChange ({ target }: React.ChangeEvent<HTMLInputElement>): void {
     setForm({
       ...form,
@@ -30,7 +26,7 @@ function SignIn (): JSX.Element {
 
   const { mutateAsync, isError } = useMutation({
     mutationFn: async (user: IFormSignIn) => {
-      return await axios.post('https://make-py-server.onrender.com/auth/signin', user, { headers })
+      return await api.post('/auth/signin', user)
     }
   })
 

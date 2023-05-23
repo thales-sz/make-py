@@ -1,7 +1,7 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Dropdown from './Dropdown'
+import { api } from '../../api/queryClient'
 
 function Header (): JSX.Element {
   const navigate = useNavigate()
@@ -25,7 +25,7 @@ function Header (): JSX.Element {
       Authorization: `Bearer ${token}`
     }
 
-    axios.get('https://make-py-server.onrender.com/auth/token', { headers })
+    api.get('/auth/token', { headers })
       .then((res) => {
         if (res.status === 202) { setLogged(true); return }
         setLogged(false)

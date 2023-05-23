@@ -1,6 +1,6 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { api } from '../../api/queryClient'
 
 interface DropdownProps {
   handleSignOutButtonClick: () => void
@@ -16,11 +16,10 @@ function Dropdown ({ handleSignOutButtonClick }: DropdownProps): JSX.Element {
     if (token === null || token === '') { setIsAdmin(false); return }
 
     const headers = {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     }
 
-    axios.get('https://make-py-server.onrender.com/auth/admin', { headers })
+    api.get('/auth/admin', { headers })
       .then((res) => {
         if (res.status === 202) { setIsAdmin(true); return }
         setIsAdmin(false)
