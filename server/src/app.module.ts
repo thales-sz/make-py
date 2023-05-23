@@ -14,6 +14,7 @@ import 'dotenv/config';
 import { RoleGuard } from './auth/role.guard';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { JwtService } from '@nestjs/jwt';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { JwtService } from '@nestjs/jwt';
       ttl: 60,
       limit: 100,
     }),
+    PaymentModule,
   ],
   controllers: [HealthCheckController],
   providers: [
