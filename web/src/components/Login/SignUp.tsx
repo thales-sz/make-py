@@ -6,7 +6,7 @@ import { useMutation } from 'react-query'
 import { formSignUpSchema } from '../../common/schema/form.schema'
 import { CgDanger } from 'react-icons/cg'
 import Loading from '../Loading'
-import { api } from '../../api/queryClient'
+import { api } from '../../api/axiosInstance'
 
 function SignUp (): JSX.Element {
   const [errorMessage, setErrorMessage] = useState('')

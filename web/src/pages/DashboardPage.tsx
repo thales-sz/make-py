@@ -5,7 +5,7 @@ import Header from '../components/Header/Header'
 import Unathorized from '../components/Unathorized'
 import Loading from '../components/Loading'
 import Dashboard from '../components/Dashboard/Dashboard'
-import { api } from '../api/queryClient'
+import { api } from '../api/axiosInstance'
 
 function DashboardPage (): JSX.Element {
   const navigate = useNavigate()

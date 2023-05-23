@@ -9,7 +9,7 @@ import Loading from '../components/Loading'
 import { CgDanger } from 'react-icons/cg'
 import Banner from '../components/Banner'
 import Pagination from '../components/Pagination'
-import { api } from '../api/queryClient'
+import { api } from '../api/axiosInstance'
 
 function Home (): JSX.Element {
   const { data, isFetching, isError } = useQuery({

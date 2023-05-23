@@ -5,7 +5,7 @@ import { formSignInSchema } from '../../common/schema/form.schema'
 import { CgDanger } from 'react-icons/cg'
 import { useNavigate } from 'react-router-dom'
 import Loading from '../Loading'
-import { api } from '../../api/queryClient'
+import { api } from '../../api/axiosInstance'
 
 function SignIn (): JSX.Element {
   const [error, setError] = useState(false)

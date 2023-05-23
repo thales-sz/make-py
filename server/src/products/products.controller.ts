@@ -40,6 +40,7 @@ export class ProductsController {
   @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
+    console.log('Find one', id);
     return this.productsService.findOne({ _id: id });
   }
 
