@@ -33,14 +33,12 @@ export class ProductsController {
   @Public()
   @Get()
   findAll() {
-    console.log('Find all products');
     return this.productsService.findAll({});
   }
 
   @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
-    console.log('Find one', id);
     return this.productsService.findOne({ _id: id });
   }
 

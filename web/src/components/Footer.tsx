@@ -25,7 +25,7 @@ function Footer (): JSX.Element {
           </a>
         </nav>
       </section>
-      <span className='text-center mt-8'>All rights reserved © 2023 <a href='https://www.linkedin.com/in/thales-sz/' className='hover:underline'>Thales Chagas™</a></span>
+      <span className='text-center mt-8'>All rights reserved © 2023 <a href='https://www.linkedin.com/in/thales-sz/' className='hover:underline' target="_blank" rel='noreferrer'>Thales Chagas™</a></span>
     </footer>
   )
 }

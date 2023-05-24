@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { local } from '../api/axiosInstance'
 import { type IProduct } from '../interfaces/product.interface'
 
 function ProductDetails (): JSX.Element {
+  const [quantity, setQuantity] = useState(1)
   const { id } = useParams()
 
   const { data } = useQuery({
@@ -16,11 +17,19 @@ function ProductDetails (): JSX.Element {
     refetchOnWindowFocus: false
   })
 
+  const increase = (): void => {
+    setQuantity(prev => prev + 1)
+  }
+
+  const decrease = (): void => {
+    setQuantity(prev => prev === 1 ? prev : prev - 1)
+  }
+
   return (
     <section className='mt-40'>
-      <section className='bg-slate-100 rounded-lg flex items-center w-1/3 mx-auto justify-between'>
-        <aside className='flex w-1/2 p-2'>
-          <ul className='flex flex-col items-center justify-center gap-2'>
+      <section className='rounded-lg flex w-3/4 mx-auto border'>
+        <aside className='flex w-1/2 p-2 max-sm:flex-col-reverse'>
+          <ul className='flex flex-col max-sm:flex-row items-center justify-center gap-2'>
             <li className='border border-slate-300 rounded-md w-20'>
               <button>
                 <img src={data?.image}/>
@@ -37,12 +46,22 @@ function ProductDetails (): JSX.Element {
               </button>
             </li>
           </ul>
-          <img src={data?.image} className='w-5/6'/>
+          <img src={data?.image} className='w-11/12'/>
         </aside>
-        <div className='w-1/4'>
+        <div className='flex flex-col items-center justify-evenly border-red-400 border w-1/2'>
           <h1 className='font-extrabold text-xl'>{data?.name}</h1>
-          <caption>{data?.description}.</caption>
-          <button>Adicionar ao carrinho</button>
+          <span>{data?.description}.</span>
+          <div className='flex'>
+            <nav className='flex gap-2 text-center '>
+              <button onClick={decrease} className='text-xl font-bold'>-</button>
+              <div>
+                <h1>QTD</h1>
+                <span className='border border-slate-400 rounded-md m-2 p-2'>{quantity}</span>
+              </div>
+              <button onClick={increase} className='text-xl font-bold'>+</button>
+            </nav>
+            <button className='bg-slate-400 hover:bg-slate-600 p-1 rounded-md focus:'>Adicionar ao carrinho</button>
+          </div>
         </div>
       </section>
     </section>

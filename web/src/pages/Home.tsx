@@ -9,19 +9,17 @@ import Loading from '../components/Loading'
 import { CgDanger } from 'react-icons/cg'
 import Banner from '../components/Banner'
 import Pagination from '../components/Pagination'
-import { api } from '../api/axiosInstance'
+import { local } from '../api/axiosInstance'
 
 function Home (): JSX.Element {
   const { data, isFetching, isError } = useQuery({
     queryFn: async () => {
-      const { data } = await api.get('/products')
+      const { data } = await local.get('/products')
       return data as IProduct[]
     },
     retry: 0,
     refetchOnWindowFocus: false
   })
-
-  const productsArray = data?.slice(0, 12)
 
   return (
     <div className="w-full">
@@ -35,7 +33,7 @@ function Home (): JSX.Element {
         {isFetching
           ? <Loading absolute={false}/>
           : <>
-            {productsArray?.map((product) => {
+            {data?.map((product) => {
               return <ProductCard key={product?._id} {...product} />
             })}
             <Pagination lastIndex={2}/>

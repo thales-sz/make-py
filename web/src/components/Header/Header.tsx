@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Dropdown from './Dropdown'
-import { api } from '../../api/axiosInstance'
+import { local } from '../../api/axiosInstance'
 
 function Header (): JSX.Element {
   const navigate = useNavigate()
@@ -25,7 +25,7 @@ function Header (): JSX.Element {
       Authorization: `Bearer ${token}`
     }
 
-    api.get('/auth/token', { headers })
+    local.get('/auth/token', { headers })
       .then((res) => {
         if (res.status === 202) { setLogged(true); return }
         setLogged(false)
@@ -53,7 +53,7 @@ function Header (): JSX.Element {
         <nav className="mr-3 mt-7 flex justify-center gap-4 text-center max-sm:text-base md:w-44">
           {(logged ?? false)
             ? <Dropdown handleSignOutButtonClick={handleSignOutButtonClick}/>
-            : <Link to="/login">Entrar</Link>}
+            : <Link to="/login" className='hover:underline'>Entrar</Link>}
           <Link to="/cart" className='hover:underline'>
             Carrinho
             </Link>

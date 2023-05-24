@@ -6,7 +6,7 @@ import { useMutation } from 'react-query'
 import { formSignUpSchema } from '../../common/schema/form.schema'
 import { CgDanger } from 'react-icons/cg'
 import Loading from '../Loading'
-import { api } from '../../api/axiosInstance'
+import { local } from '../../api/axiosInstance'
 
 function SignUp (): JSX.Element {
   const [errorMessage, setErrorMessage] = useState('')
@@ -30,7 +30,7 @@ function SignUp (): JSX.Element {
 
   const singUp = useMutation({
     mutationFn: async (user: IFormSignUp): Promise<IUser> => {
-      const { data } = await api.post('/users/signup', user)
+      const { data } = await local.post('/users/signup', user)
       return data as IUser
     },
     onError: async (error: any) => {
@@ -43,7 +43,7 @@ function SignUp (): JSX.Element {
 
   const singIn = useMutation({
     mutationFn: async (user: IFormSignIn) => {
-      return await api.post('/auth/signin', user)
+      return await local.post('/auth/signin', user)
     }
   })
 

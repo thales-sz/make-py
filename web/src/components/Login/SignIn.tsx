@@ -5,7 +5,7 @@ import { formSignInSchema } from '../../common/schema/form.schema'
 import { CgDanger } from 'react-icons/cg'
 import { useNavigate } from 'react-router-dom'
 import Loading from '../Loading'
-import { api } from '../../api/axiosInstance'
+import { local } from '../../api/axiosInstance'
 
 function SignIn (): JSX.Element {
   const [error, setError] = useState(false)
@@ -26,7 +26,7 @@ function SignIn (): JSX.Element {
 
   const { mutateAsync, isError } = useMutation({
     mutationFn: async (user: IFormSignIn) => {
-      return await api.post('/auth/signin', user)
+      return await local.post('/auth/signin', user)
     }
   })
 

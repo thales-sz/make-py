@@ -5,7 +5,7 @@ import Header from '../components/Header/Header'
 import Unathorized from '../components/Unathorized'
 import Loading from '../components/Loading'
 import Dashboard from '../components/Dashboard/Dashboard'
-import { api } from '../api/axiosInstance'
+import { local } from '../api/axiosInstance'
 
 function DashboardPage (): JSX.Element {
   const navigate = useNavigate()
@@ -19,7 +19,7 @@ function DashboardPage (): JSX.Element {
 
   const { isLoading, isError } = useQuery({
     queryFn: async () => {
-      const { data } = await api.get('/orders', { headers })
+      const { data } = await local.get('/orders', { headers })
       return data
     },
     retry: 0,

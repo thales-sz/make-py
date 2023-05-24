@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { api } from '../../api/axiosInstance'
+import { local } from '../../api/axiosInstance'
 
 interface DropdownProps {
   handleSignOutButtonClick: () => void
@@ -19,7 +19,7 @@ function Dropdown ({ handleSignOutButtonClick }: DropdownProps): JSX.Element {
       Authorization: `Bearer ${token}`
     }
 
-    api.get('/auth/admin', { headers })
+    local.get('/auth/admin', { headers })
       .then((res) => {
         if (res.status === 202) { setIsAdmin(true); return }
         setIsAdmin(false)
