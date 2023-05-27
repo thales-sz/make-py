@@ -4,16 +4,17 @@ import Slider from '../components/Slider'
 import ProductCard from '../components/ProductCard'
 import Footer from '../components/Footer'
 import { useQuery } from 'react-query'
-import axios from 'axios'
 import { type IProduct } from '../interfaces/product.interface'
 import Loading from '../components/Loading'
 import { CgDanger } from 'react-icons/cg'
 import Banner from '../components/Banner'
+import Pagination from '../components/Pagination'
+import { local } from '../api/axiosInstance'
 
 function Home (): JSX.Element {
   const { data, isFetching, isError } = useQuery({
     queryFn: async () => {
-      const { data } = await axios.get('https://make-py-server.onrender.com/products')
+      const { data } = await local.get('/products')
       return data as IProduct[]
     },
     retry: 0,
@@ -31,12 +32,16 @@ function Home (): JSX.Element {
       <section className="mx-auto flex max-w-7xl flex-wrap justify-center gap-5">
         {isFetching
           ? <Loading absolute={false}/>
-          : data?.map((product) => {
-            return <ProductCard key={product?._id} {...product} />
-          })}
+          : <>
+            {data?.map((product) => {
+              return <ProductCard key={product?._id} {...product} />
+            })}
+            <Pagination lastIndex={2}/>
+          </>
+          }
       </section>
       {isError
-        ? <div className='flex text-red-500 gap-2'>
+        ? <div className='flex text-red-500 gap-2 mx-auto'>
           <CgDanger width={10} color='red'/>
             Ocorreu um erro!
           </div>

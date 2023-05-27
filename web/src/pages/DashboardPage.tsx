@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React from 'react'
 import { useQuery } from 'react-query'
 import { useNavigate } from 'react-router-dom'
@@ -6,6 +5,7 @@ import Header from '../components/Header/Header'
 import Unathorized from '../components/Unathorized'
 import Loading from '../components/Loading'
 import Dashboard from '../components/Dashboard/Dashboard'
+import { local } from '../api/axiosInstance'
 
 function DashboardPage (): JSX.Element {
   const navigate = useNavigate()
@@ -19,7 +19,7 @@ function DashboardPage (): JSX.Element {
 
   const { isLoading, isError } = useQuery({
     queryFn: async () => {
-      const { data } = await axios.get('https://make-py-server.onrender.com/orders', { headers })
+      const { data } = await local.get('/orders', { headers })
       return data
     },
     retry: 0,

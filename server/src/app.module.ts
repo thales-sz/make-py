@@ -14,6 +14,7 @@ import 'dotenv/config';
 import { RoleGuard } from './auth/role.guard';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { JwtService } from '@nestjs/jwt';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { JwtService } from '@nestjs/jwt';
       isGlobal: true,
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
+        ACCESS_TOKEN_MERCADO_PAGO: Joi.string().required(),
       }),
     }),
     UsersModule,
@@ -28,6 +30,7 @@ import { JwtService } from '@nestjs/jwt';
     OrdersModule,
     AuthModule,
     DatabaseModule,
+    PaymentModule,
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 100,
