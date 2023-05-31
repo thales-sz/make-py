@@ -19,7 +19,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['https://make-py.vercel.app/', 'http://localhost:5173'],
+    origin: ['https://make-py.vercel.app', 'http://localhost:5173'],
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
     credentials: true,
   });
