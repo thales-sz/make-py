@@ -7,5 +7,8 @@ export const api = axios.create({
 
 export const local = axios.create({
   baseURL: 'https://make-py-server.onrender.com',
-  headers: { 'Content-Type': 'application/json' }
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
+  }
 })
